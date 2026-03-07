@@ -2,7 +2,7 @@
 
 > 生成时间：2026-03-07  
 > 版本：V1.0  
-> 覆盖模块：10个
+> 覆盖模块：10个（实际生成9个）
 
 ---
 
@@ -19,9 +19,11 @@
 | 07 | 业务组织 | [corpus-07-business-organization.md](./corpus-07-business-organization.md) | 33KB | 审核话术、负载均衡算法、6类业务时限 |
 | 08 | 队伍状况 | [corpus-08-team-status.md](./corpus-08-team-status.md) | 23KB | 负载计算公式、五维度绩效、协同分配规则 |
 | 09 | 风险提示 | [corpus-09-risk-management.md](./corpus-09-risk-management.md) | 24KB | 7条预警阈值、四级风险体系、整改通知话术 |
-| 10 | 业绩看板(支持) | [corpus-10-performance-center.md](./corpus-10-performance-center.md) | 待定 | 14项指标、星型模型、排行榜规则 |
+| 10 | 业绩看板(支持) | ~~corpus-10-performance-center.md~~ | ❌ 缺失 | 14项指标、星型模型、排行榜规则 |
 
-**总计：约 320KB+ 语料/数据/规则文档**
+> ⚠️ **注意**：corpus-10-performance-center.md 文件在子任务执行过程中未能生成，可能需要手动补充。
+
+**总计：约 296KB+ 语料/数据/规则文档（9/10模块完成）**
 
 ---
 
@@ -75,7 +77,7 @@
 
 | 版本 | 日期 | 说明 |
 |------|------|------|
-| V1.0 | 2026-03-07 | 初始版本，覆盖10个模块的语料/数据/规则梳理 |
+| V1.0 | 2026-03-07 | 初始版本，覆盖9个模块的语料/数据/规则梳理（corpus-10-performance-center.md 缺失）|
 
 ---
 
