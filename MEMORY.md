@@ -65,6 +65,30 @@
 
 ---
 
+## 业务模型蒸馏智能体脚本（新增）
+- **文件**：`scripts/distillation_agent.py`
+- **GitHub**：https://github.com/tangwm88/brokerage-workbench-docs/blob/master/scripts/distillation_agent.py
+- **版本**：v1.0
+- **定位**：基于蒸馏智能体设计方案 v1.2 的可执行 Python 脚本
+- **功能**：接收 YAML/JSON 输入 → 按五步法执行 → 输出结构化模型包（JSON + Markdown 报告）
+- **核心规则内置**：
+  - 陶总五大反对（每步自动校验）
+  - 禁用词语表（中优先级警告，不阻塞流程）
+  - 陶总八步方法论映射
+- **脚本架构**：
+  - 数据类定义（BusinessGoal/Benchmark/DataItem/AnalysisDimension/ActionItem/Role）
+  - CoreRuleValidator（核心规则校验器）
+  - DistillationEngine（五步法蒸馏引擎）
+  - IOHandler（输入输出处理器）
+- **示例文件**：`scripts/example_bond_business.yaml`（投行债券发行业务完整示例）
+- **使用方法**：
+  - `python distillation_agent.py --example --output ./output`（示例运行）
+  - `python distillation_agent.py --input business.yaml --output ./output`（自定义输入）
+- **输出文件**：model_package.json + step1~5.json + validation_logs.json + README.md
+- **创建时间**：2026-06-03
+
+---
+
 ## 企业级业务模型蒸馏智能体设计方案（更新）
 - **文件**：`docs/企业级业务模型蒸馏智能体设计方案-v1.0.md`（内容已更新为v1.2）
 - **GitHub**：https://github.com/tangwm88/brokerage-workbench-docs/blob/master/docs/企业级业务模型蒸馏智能体设计方案-v1.0.md
