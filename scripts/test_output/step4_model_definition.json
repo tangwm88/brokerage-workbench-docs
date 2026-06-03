@@ -1,0 +1,174 @@
+{
+  "step": 4,
+  "name": "模型定义蒸馏",
+  "output_name": "角色体系 + 分析模型 + 动作模型",
+  "roles": {
+    "roles": [
+      {
+        "name": "客户经理",
+        "source_position": "投行前台业务人员",
+        "core_responsibility": "项目全周期负责人",
+        "service_goal": "投行债券发行业务",
+        "role_definition": "你是债券发行业务的项目全周期负责人",
+        "goals": [
+          "项目成功率>=80%",
+          "客户满意度>=4.5/5"
+        ],
+        "backstory": "拥有5年债券发行经验，熟悉各类发行人和投资者",
+        "constraints": {
+          "必须做": [
+            "所有项目必须经过立项评估",
+            "高风险客户必须标记预警"
+          ],
+          "禁止做": [
+            "不得向黑名单客户分配资源"
+          ]
+        }
+      },
+      {
+        "name": "组织者",
+        "source_position": "投行管理层",
+        "core_responsibility": "整体统筹者，判断风险，调配资源",
+        "service_goal": "投行整体经营",
+        "role_definition": "你是投行业务的整体统筹者",
+        "goals": [],
+        "backstory": "",
+        "constraints": {}
+      },
+      {
+        "name": "质控内核",
+        "source_position": "质控合规团队",
+        "core_responsibility": "质量把关者，把控项目质量，生成质控报告",
+        "service_goal": "项目质量合规",
+        "role_definition": "你是项目质量的把关者",
+        "goals": [],
+        "backstory": "",
+        "constraints": {}
+      },
+      {
+        "name": "产品支持",
+        "source_position": "产品方案团队",
+        "core_responsibility": "方案交付者，设计方案，对接监管",
+        "service_goal": "发行方案设计",
+        "role_definition": "你是发行方案的设计者",
+        "goals": [],
+        "backstory": "",
+        "constraints": {}
+      }
+    ],
+    "organizer_count": 1,
+    "employee_count": 3,
+    "role_check": "通过"
+  },
+  "analysis_model": {
+    "dimensions": [
+      {
+        "name": "偿债能力",
+        "plain_language": "发行人到期能不能还本付息？",
+        "objective_data": "近3年经营性现金流净额/资产负债率/利息覆盖倍数",
+        "output": "偿债能力判断（通过/注意/不通过）",
+        "analysis_framework": "现金流覆盖能力+资产负债结构+盈利能力+同业对比"
+      },
+      {
+        "name": "发行方案",
+        "plain_language": "发多少、发多久、利率定多少、怎么还钱？",
+        "objective_data": "拟发行规模/期限/利率/还本付息方式",
+        "output": "发行方案合理性判断",
+        "analysis_framework": "规模参数+期限参数+利率参数+还本付息方式"
+      },
+      {
+        "name": "市场窗口",
+        "plain_language": "现在发债是不是好时候？投资者买不买？",
+        "objective_data": "利率环境/同类型发行/投资者需求/监管环境",
+        "output": "市场窗口判断（有利/中性/不利）",
+        "analysis_framework": "利率环境+同类型发行+投资者需求+监管环境"
+      },
+      {
+        "name": "资金用途",
+        "plain_language": "募投项目有没有明确用途？钱怎么花？",
+        "objective_data": "募投项目备案/资金分配/IRR测算",
+        "output": "资金用途合理性判断",
+        "analysis_framework": "项目真实性+资金分配+效益测算+偿债来源"
+      },
+      {
+        "name": "增信合规",
+        "plain_language": "客户历史上有没有违规？签完字会不会被追责？",
+        "objective_data": "主体评级/历史处罚/担保抵押/合规状态",
+        "output": "合规风险评估（通过/注意/不通过）",
+        "analysis_framework": "主体评级+历史合规+担保抵押+增信措施"
+      }
+    ],
+    "dimension_count": 5,
+    "dimension_check": "通过"
+  },
+  "action_model": {
+    "events": [
+      {
+        "event_name": "债券发行线索录入",
+        "trigger_condition": "发现客户有债券发行意向",
+        "event_level": "常规",
+        "actions": [
+          {
+            "name": "线索核实与初步触达",
+            "trigger": "收到债券发行线索",
+            "steps": [
+              "查询客户基本信息",
+              "判断线索来源可靠性",
+              "选择触达方式",
+              "首次沟通确认3个事实"
+            ],
+            "output": "《线索跟进记录》+ 线索状态更新",
+            "exception_handling": {
+              "客户关键人无法触达": "尝试经办人/董秘 → 标记'触达困难' → 组织者协调"
+            },
+            "deadline": "2个工作日内",
+            "risk_level": "可以"
+          },
+          {
+            "name": "线索登记与资源预判",
+            "trigger": "收到债券发行线索",
+            "steps": [
+              "登记线索到投行经营看板",
+              "预判资源需求",
+              "检查历史项目冲突",
+              "判断线索优先级"
+            ],
+            "output": "《线索登记台账》更新 + 资源预判结论",
+            "exception_handling": {
+              "历史项目冲突": "标记冲突 → 确认是否为新增需求"
+            },
+            "deadline": "1个工作日内",
+            "risk_level": "可以"
+          }
+        ]
+      },
+      {
+        "event_name": "立项评估启动",
+        "trigger_condition": "客户确认有债券发行意向",
+        "event_level": "重点",
+        "actions": [
+          {
+            "name": "启动5维度分析模型评估",
+            "trigger": "客户确认债券发行意向",
+            "steps": [
+              "收集基础数据",
+              "调用债券业务分析模型v2.0，完成5维度分析",
+              "整理分析结果，形成初步判断",
+              "提交立项评估申请"
+            ],
+            "output": "《债券发行立项评估表》+ 初步立项建议",
+            "exception_handling": {
+              "财务数据缺失": "标记'数据缺失' → 要求客户提供",
+              "核心指标不通过": "记录不通过项 → 提交质控内核审查"
+            },
+            "deadline": "3个工作日内",
+            "risk_level": "必须确认"
+          }
+        ]
+      }
+    ],
+    "event_count": 2
+  },
+  "timestamp": "2026-06-03T16:35:32.263909",
+  "status": "通过"
+}

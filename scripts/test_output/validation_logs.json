@@ -1,0 +1,228 @@
+{
+  "step_1": [
+    {
+      "check_item": "禁用词检查：行业",
+      "result": "不通过",
+      "issue": "发现禁用词'行业'，应替换为'产业'",
+      "severity": "中"
+    },
+    {
+      "check_item": "反对1：模型结构",
+      "result": "通过",
+      "issue": "业务目标结构完整（core_goals已定义）",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对2：原子库非流程",
+      "result": "通过",
+      "issue": "业务目标为可定义的原子目标",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对3：角色目标清晰",
+      "result": "通过",
+      "issue": "业务目标有名称和定义（角色/目标清晰）",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对4：客观数据",
+      "result": "通过",
+      "issue": "有客观数据指标",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对5：角色目的出发",
+      "result": "通过",
+      "issue": "从角色和目的出发",
+      "severity": "-"
+    },
+    {
+      "check_item": "陶总八步校验：定目的, 定角度, 客观分类",
+      "result": "通过",
+      "issue": "Step 1 对应陶总八步中的 ['定目的', '定角度', '客观分类']",
+      "severity": "-"
+    }
+  ],
+  "step_2": [
+    {
+      "check_item": "禁用词检查：逻辑",
+      "result": "不通过",
+      "issue": "发现禁用词'逻辑'，应替换为'规律'",
+      "severity": "中"
+    },
+    {
+      "check_item": "禁用词检查：对齐",
+      "result": "不通过",
+      "issue": "发现禁用词'对齐'，应替换为'领会'",
+      "severity": "中"
+    },
+    {
+      "check_item": "反对1：模型结构",
+      "result": "通过",
+      "issue": "标杆分析结构完整",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对2：原子库非流程",
+      "result": "通过",
+      "issue": "输出为可调用原子库",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对3：角色目标清晰",
+      "result": "通过",
+      "issue": "目标/名称已定义",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对4：客观数据",
+      "result": "通过",
+      "issue": "标杆分析有具体对象和做法（客观可验证）",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对5：角色目的出发",
+      "result": "通过",
+      "issue": "从角色和目的出发",
+      "severity": "-"
+    },
+    {
+      "check_item": "陶总八步校验：对比蒸馏",
+      "result": "通过",
+      "issue": "Step 2 对应陶总八步中的 ['对比蒸馏']",
+      "severity": "-"
+    }
+  ],
+  "step_3": [
+    {
+      "check_item": "禁用词检查",
+      "result": "通过",
+      "issue": "无禁用词",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对1：模型结构",
+      "result": "通过",
+      "issue": "数据关联结构完整",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对2：原子库非流程",
+      "result": "通过",
+      "issue": "输出为可调用原子库",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对3：角色目标清晰",
+      "result": "通过",
+      "issue": "目标/名称已定义",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对4：客观数据",
+      "result": "通过",
+      "issue": "数据关联有具体定义（客观数据）",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对5：角色目的出发",
+      "result": "通过",
+      "issue": "从角色和目的出发",
+      "severity": "-"
+    },
+    {
+      "check_item": "陶总八步校验：场景调用",
+      "result": "通过",
+      "issue": "Step 3 对应陶总八步中的 ['场景调用']",
+      "severity": "-"
+    }
+  ],
+  "step_4": [
+    {
+      "check_item": "禁用词检查：行业",
+      "result": "不通过",
+      "issue": "发现禁用词'行业'，应替换为'产业'",
+      "severity": "中"
+    },
+    {
+      "check_item": "反对1：模型结构",
+      "result": "通过",
+      "issue": "模型结构完整（角色/维度/动作）",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对2：原子库非流程",
+      "result": "通过",
+      "issue": "动作有触发条件（事件驱动）",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对3：角色目标清晰",
+      "result": "通过",
+      "issue": "角色体系已定义",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对4：客观数据",
+      "result": "通过",
+      "issue": "分析维度有客观数据定义",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对5：角色目的出发",
+      "result": "通过",
+      "issue": "从角色和目的出发",
+      "severity": "-"
+    },
+    {
+      "check_item": "陶总八步校验：提炼主维度, 标准化建模",
+      "result": "通过",
+      "issue": "Step 4 对应陶总八步中的 ['提炼主维度', '标准化建模']",
+      "severity": "-"
+    }
+  ],
+  "step_5": [
+    {
+      "check_item": "禁用词检查",
+      "result": "通过",
+      "issue": "无禁用词",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对1：模型结构",
+      "result": "通过",
+      "issue": "验证结构完整",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对2：原子库非流程",
+      "result": "通过",
+      "issue": "输出为可调用原子库",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对3：角色目标清晰",
+      "result": "通过",
+      "issue": "目标/名称已定义",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对4：客观数据",
+      "result": "通过",
+      "issue": "有客观数据支撑",
+      "severity": "-"
+    },
+    {
+      "check_item": "反对5：角色目的出发",
+      "result": "通过",
+      "issue": "从角色和目的出发",
+      "severity": "-"
+    },
+    {
+      "check_item": "陶总八步校验：监督迭代",
+      "result": "通过",
+      "issue": "Step 5 对应陶总八步中的 ['监督迭代']",
+      "severity": "-"
+    }
+  ]
+}

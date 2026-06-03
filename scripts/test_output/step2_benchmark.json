@@ -1,0 +1,37 @@
+{
+  "step": 2,
+  "name": "标杆分析蒸馏",
+  "output_name": "《标杆分析表》",
+  "benchmarks": [
+    {
+      "dimension": "角色体系",
+      "benchmark_obj": "华泰证券",
+      "benchmark_practice": "AI选股/盯盘/交易助手+客户经理",
+      "our_status": "组织者+超级数字员工框架已设计",
+      "gap": "概念领先，落地滞后",
+      "adoption": "调整后采用",
+      "remark": "保持组织者+数字员工框架，学习具象化"
+    },
+    {
+      "dimension": "分析模型",
+      "benchmark_obj": "中信建投",
+      "benchmark_practice": "智能条件选股/全维度市场搜索/财务数据解读",
+      "our_status": "5维度模型已有，细节待验证",
+      "gap": "方法论对齐",
+      "adoption": "直接采用",
+      "remark": "5维度框架与中信思路一致"
+    },
+    {
+      "dimension": "动作标准化",
+      "benchmark_obj": "华住集团",
+      "benchmark_practice": "入住SOP：预订→确认→入住→服务→离店",
+      "our_status": "规定动作模型v1.0已设计",
+      "gap": "框架对齐，待适配",
+      "adoption": "调整后采用",
+      "remark": "酒店SOP逻辑迁移到证券"
+    }
+  ],
+  "benchmark_count": 3,
+  "timestamp": "2026-06-03T16:35:32.263545",
+  "status": "通过"
+}
