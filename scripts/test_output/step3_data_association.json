@@ -1,0 +1,41 @@
+{
+  "step": 3,
+  "name": "数据关联蒸馏",
+  "output_name": "《数据关联矩阵》",
+  "data_items": [
+    {
+      "indicator": "经营性现金流净额",
+      "formula": "现金流量表直接读取",
+      "data_source": "Wind/同花顺",
+      "access_path": "系统API拉取",
+      "auto_manual": "自动",
+      "remark": "近3年平均值"
+    },
+    {
+      "indicator": "现金流覆盖率",
+      "formula": "经营性现金流/年本息",
+      "data_source": "上述两项计算",
+      "access_path": "系统自动计算",
+      "auto_manual": "自动",
+      "remark": ">=1.5通过"
+    },
+    {
+      "indicator": "拟发行规模",
+      "formula": "客户需求",
+      "data_source": "客户经理录入",
+      "access_path": "界面录入",
+      "auto_manual": "手工",
+      "remark": "精确到亿元"
+    }
+  ],
+  "statistics": {
+    "total": 3,
+    "auto": 2,
+    "semi": 0,
+    "manual": 1,
+    "auto_ratio": "66.7%"
+  },
+  "auto_ratio_check": "通过",
+  "timestamp": "2026-06-03T16:35:32.263691",
+  "status": "通过"
+}

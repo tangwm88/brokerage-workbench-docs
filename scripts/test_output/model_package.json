@@ -1,0 +1,641 @@
+{
+  "version": "v1.0",
+  "status": "通过",
+  "generated_at": "2026-06-03T16:35:32.264495",
+  "core_rules": {
+    "tao_five_oppose": {
+      "1": {
+        "name": "反对讲意义、讲作用、讲自洽，而不讲模型本身",
+        "check": "输出是否有模型结构（主模型/维度/输入/输出/子模型/调用关系），而非仅讲意义",
+        "action": "如违反，标记为'不合格'，必须补充模型结构"
+      },
+      "2": {
+        "name": "反对流程化、线性化地拆业务",
+        "check": "输出是否为可复用原子库（事件驱动），而非线性流程",
+        "action": "如违反，标记为'不合格'，改为原子库调用"
+      },
+      "3": {
+        "name": "反对角色混乱、目标混乱",
+        "check": "每个模型是否明确服务目的、目标角色、执行角色",
+        "action": "如违反，标记为'不合格'，重新梳理角色"
+      },
+      "4": {
+        "name": "反对主观拍脑袋和甩锅给大模型",
+        "check": "是否基于客观事实（有数据支撑/来源明确），而非主观",
+        "action": "如违反，标记为'不合格'，补充客观维度"
+      },
+      "5": {
+        "name": "反对传统信息系统视角和技术自说自话",
+        "check": "是否从角色和目的出发，而非从系统功能出发",
+        "action": "如违反，标记为'不合格'，切换为角色视角"
+      }
+    },
+    "tao_eight_steps": {
+      "1": "定目的",
+      "2": "定角度",
+      "3": "客观分类",
+      "4": "提炼主维度",
+      "5": "对比蒸馏",
+      "6": "标准化建模",
+      "7": "场景调用",
+      "8": "监督迭代"
+    },
+    "forbidden_words": {
+      "基本面": "企业实际质地/财务实际状况",
+      "偏好": "倾向/选择方向",
+      "流程": "协同",
+      "行业": "产业",
+      "场景": "应用",
+      "逻辑": "规律",
+      "对齐": "领会",
+      "话术": "沟通要点"
+    }
+  },
+  "steps": {
+    "step1_business_goal": {
+      "step": 1,
+      "name": "业务目标蒸馏",
+      "output_name": "《业务目标清单》",
+      "core_goals": [
+        {
+          "name": "成功发行债券",
+          "definition": "完成从项目线索到债券成功发行的全周期交付",
+          "key_actions": [
+            "线索获取与核实",
+            "立项评估（5维度分析）",
+            "发行方案设计",
+            "申报材料制作",
+            "监管申报与反馈回复"
+          ],
+          "metrics": [
+            "年度发行项目数量",
+            "发行成功率（申报通过/总申报）"
+          ],
+          "boundary": "不包含银行间市场非金融企业债务融资工具"
+        },
+        {
+          "name": "项目质量控制",
+          "definition": "确保每个发行项目材料真实、风险可控、合规达标",
+          "key_actions": [
+            "尽职调查质量把关",
+            "募集说明书数据核查",
+            "合规风险审查",
+            "质控内核评级"
+          ],
+          "metrics": [
+            "质控评级A级项目占比",
+            "监管反馈问题数量（均值）"
+          ],
+          "boundary": "不包含项目执行中的日常客户关系维护"
+        }
+      ],
+      "relationships": {
+        "依赖": [
+          "目标2质量通过 → 目标1才能申报"
+        ],
+        "协同": [
+          "目标1线索获取 → 发现客户需求 → 回流客户服务"
+        ]
+      },
+      "business_line": "投行债券发行业务",
+      "timestamp": "2026-06-03T16:35:32.263373",
+      "status": "通过"
+    },
+    "step2_benchmark": {
+      "step": 2,
+      "name": "标杆分析蒸馏",
+      "output_name": "《标杆分析表》",
+      "benchmarks": [
+        {
+          "dimension": "角色体系",
+          "benchmark_obj": "华泰证券",
+          "benchmark_practice": "AI选股/盯盘/交易助手+客户经理",
+          "our_status": "组织者+超级数字员工框架已设计",
+          "gap": "概念领先，落地滞后",
+          "adoption": "调整后采用",
+          "remark": "保持组织者+数字员工框架，学习具象化"
+        },
+        {
+          "dimension": "分析模型",
+          "benchmark_obj": "中信建投",
+          "benchmark_practice": "智能条件选股/全维度市场搜索/财务数据解读",
+          "our_status": "5维度模型已有，细节待验证",
+          "gap": "方法论对齐",
+          "adoption": "直接采用",
+          "remark": "5维度框架与中信思路一致"
+        },
+        {
+          "dimension": "动作标准化",
+          "benchmark_obj": "华住集团",
+          "benchmark_practice": "入住SOP：预订→确认→入住→服务→离店",
+          "our_status": "规定动作模型v1.0已设计",
+          "gap": "框架对齐，待适配",
+          "adoption": "调整后采用",
+          "remark": "酒店SOP逻辑迁移到证券"
+        }
+      ],
+      "benchmark_count": 3,
+      "timestamp": "2026-06-03T16:35:32.263545",
+      "status": "通过"
+    },
+    "step3_data_association": {
+      "step": 3,
+      "name": "数据关联蒸馏",
+      "output_name": "《数据关联矩阵》",
+      "data_items": [
+        {
+          "indicator": "经营性现金流净额",
+          "formula": "现金流量表直接读取",
+          "data_source": "Wind/同花顺",
+          "access_path": "系统API拉取",
+          "auto_manual": "自动",
+          "remark": "近3年平均值"
+        },
+        {
+          "indicator": "现金流覆盖率",
+          "formula": "经营性现金流/年本息",
+          "data_source": "上述两项计算",
+          "access_path": "系统自动计算",
+          "auto_manual": "自动",
+          "remark": ">=1.5通过"
+        },
+        {
+          "indicator": "拟发行规模",
+          "formula": "客户需求",
+          "data_source": "客户经理录入",
+          "access_path": "界面录入",
+          "auto_manual": "手工",
+          "remark": "精确到亿元"
+        }
+      ],
+      "statistics": {
+        "total": 3,
+        "auto": 2,
+        "semi": 0,
+        "manual": 1,
+        "auto_ratio": "66.7%"
+      },
+      "auto_ratio_check": "通过",
+      "timestamp": "2026-06-03T16:35:32.263691",
+      "status": "通过"
+    },
+    "step4_model_definition": {
+      "step": 4,
+      "name": "模型定义蒸馏",
+      "output_name": "角色体系 + 分析模型 + 动作模型",
+      "roles": {
+        "roles": [
+          {
+            "name": "客户经理",
+            "source_position": "投行前台业务人员",
+            "core_responsibility": "项目全周期负责人",
+            "service_goal": "投行债券发行业务",
+            "role_definition": "你是债券发行业务的项目全周期负责人",
+            "goals": [
+              "项目成功率>=80%",
+              "客户满意度>=4.5/5"
+            ],
+            "backstory": "拥有5年债券发行经验，熟悉各类发行人和投资者",
+            "constraints": {
+              "必须做": [
+                "所有项目必须经过立项评估",
+                "高风险客户必须标记预警"
+              ],
+              "禁止做": [
+                "不得向黑名单客户分配资源"
+              ]
+            }
+          },
+          {
+            "name": "组织者",
+            "source_position": "投行管理层",
+            "core_responsibility": "整体统筹者，判断风险，调配资源",
+            "service_goal": "投行整体经营",
+            "role_definition": "你是投行业务的整体统筹者",
+            "goals": [],
+            "backstory": "",
+            "constraints": {}
+          },
+          {
+            "name": "质控内核",
+            "source_position": "质控合规团队",
+            "core_responsibility": "质量把关者，把控项目质量，生成质控报告",
+            "service_goal": "项目质量合规",
+            "role_definition": "你是项目质量的把关者",
+            "goals": [],
+            "backstory": "",
+            "constraints": {}
+          },
+          {
+            "name": "产品支持",
+            "source_position": "产品方案团队",
+            "core_responsibility": "方案交付者，设计方案，对接监管",
+            "service_goal": "发行方案设计",
+            "role_definition": "你是发行方案的设计者",
+            "goals": [],
+            "backstory": "",
+            "constraints": {}
+          }
+        ],
+        "organizer_count": 1,
+        "employee_count": 3,
+        "role_check": "通过"
+      },
+      "analysis_model": {
+        "dimensions": [
+          {
+            "name": "偿债能力",
+            "plain_language": "发行人到期能不能还本付息？",
+            "objective_data": "近3年经营性现金流净额/资产负债率/利息覆盖倍数",
+            "output": "偿债能力判断（通过/注意/不通过）",
+            "analysis_framework": "现金流覆盖能力+资产负债结构+盈利能力+同业对比"
+          },
+          {
+            "name": "发行方案",
+            "plain_language": "发多少、发多久、利率定多少、怎么还钱？",
+            "objective_data": "拟发行规模/期限/利率/还本付息方式",
+            "output": "发行方案合理性判断",
+            "analysis_framework": "规模参数+期限参数+利率参数+还本付息方式"
+          },
+          {
+            "name": "市场窗口",
+            "plain_language": "现在发债是不是好时候？投资者买不买？",
+            "objective_data": "利率环境/同类型发行/投资者需求/监管环境",
+            "output": "市场窗口判断（有利/中性/不利）",
+            "analysis_framework": "利率环境+同类型发行+投资者需求+监管环境"
+          },
+          {
+            "name": "资金用途",
+            "plain_language": "募投项目有没有明确用途？钱怎么花？",
+            "objective_data": "募投项目备案/资金分配/IRR测算",
+            "output": "资金用途合理性判断",
+            "analysis_framework": "项目真实性+资金分配+效益测算+偿债来源"
+          },
+          {
+            "name": "增信合规",
+            "plain_language": "客户历史上有没有违规？签完字会不会被追责？",
+            "objective_data": "主体评级/历史处罚/担保抵押/合规状态",
+            "output": "合规风险评估（通过/注意/不通过）",
+            "analysis_framework": "主体评级+历史合规+担保抵押+增信措施"
+          }
+        ],
+        "dimension_count": 5,
+        "dimension_check": "通过"
+      },
+      "action_model": {
+        "events": [
+          {
+            "event_name": "债券发行线索录入",
+            "trigger_condition": "发现客户有债券发行意向",
+            "event_level": "常规",
+            "actions": [
+              {
+                "name": "线索核实与初步触达",
+                "trigger": "收到债券发行线索",
+                "steps": [
+                  "查询客户基本信息",
+                  "判断线索来源可靠性",
+                  "选择触达方式",
+                  "首次沟通确认3个事实"
+                ],
+                "output": "《线索跟进记录》+ 线索状态更新",
+                "exception_handling": {
+                  "客户关键人无法触达": "尝试经办人/董秘 → 标记'触达困难' → 组织者协调"
+                },
+                "deadline": "2个工作日内",
+                "risk_level": "可以"
+              },
+              {
+                "name": "线索登记与资源预判",
+                "trigger": "收到债券发行线索",
+                "steps": [
+                  "登记线索到投行经营看板",
+                  "预判资源需求",
+                  "检查历史项目冲突",
+                  "判断线索优先级"
+                ],
+                "output": "《线索登记台账》更新 + 资源预判结论",
+                "exception_handling": {
+                  "历史项目冲突": "标记冲突 → 确认是否为新增需求"
+                },
+                "deadline": "1个工作日内",
+                "risk_level": "可以"
+              }
+            ]
+          },
+          {
+            "event_name": "立项评估启动",
+            "trigger_condition": "客户确认有债券发行意向",
+            "event_level": "重点",
+            "actions": [
+              {
+                "name": "启动5维度分析模型评估",
+                "trigger": "客户确认债券发行意向",
+                "steps": [
+                  "收集基础数据",
+                  "调用债券业务分析模型v2.0，完成5维度分析",
+                  "整理分析结果，形成初步判断",
+                  "提交立项评估申请"
+                ],
+                "output": "《债券发行立项评估表》+ 初步立项建议",
+                "exception_handling": {
+                  "财务数据缺失": "标记'数据缺失' → 要求客户提供",
+                  "核心指标不通过": "记录不通过项 → 提交质控内核审查"
+                },
+                "deadline": "3个工作日内",
+                "risk_level": "必须确认"
+              }
+            ]
+          }
+        ],
+        "event_count": 2
+      },
+      "timestamp": "2026-06-03T16:35:32.263909",
+      "status": "通过"
+    },
+    "step5_cross_validation": {
+      "step": 5,
+      "name": "交叉验证（裁判验证）",
+      "output_name": "《交叉验证报告》+ 模型修正版",
+      "validation_results": {
+        "self_consistency": {
+          "result": "通过",
+          "issues": []
+        },
+        "benchmark_comparison": {
+          "result": "通过",
+          "issues": []
+        },
+        "executability": {
+          "result": "通过",
+          "issues": []
+        },
+        "referee": {
+          "referee_count": 2,
+          "referees": [
+            {
+              "name": "项目经理A",
+              "experience": "5年债券发行",
+              "feedback": "组织者判断能力需联席机制"
+            },
+            {
+              "name": "项目经理B",
+              "experience": "3年债券+2年定增",
+              "feedback": "需增加信用利差指标"
+            }
+          ],
+          "overall_feedback": "模型框架可执行，数据对接是落地瓶颈"
+        }
+      },
+      "issues": {
+        "high": [],
+        "medium": [],
+        "low": []
+      },
+      "issue_count": {
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      },
+      "overall_assessment": "通过",
+      "revised_version": "v1.0",
+      "timestamp": "2026-06-03T16:35:32.264364",
+      "status": "通过"
+    }
+  },
+  "validation_logs": {
+    "step_1": [
+      {
+        "check_item": "禁用词检查：行业",
+        "result": "不通过",
+        "issue": "发现禁用词'行业'，应替换为'产业'",
+        "severity": "中"
+      },
+      {
+        "check_item": "反对1：模型结构",
+        "result": "通过",
+        "issue": "业务目标结构完整（core_goals已定义）",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对2：原子库非流程",
+        "result": "通过",
+        "issue": "业务目标为可定义的原子目标",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对3：角色目标清晰",
+        "result": "通过",
+        "issue": "业务目标有名称和定义（角色/目标清晰）",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对4：客观数据",
+        "result": "通过",
+        "issue": "有客观数据指标",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对5：角色目的出发",
+        "result": "通过",
+        "issue": "从角色和目的出发",
+        "severity": "-"
+      },
+      {
+        "check_item": "陶总八步校验：定目的, 定角度, 客观分类",
+        "result": "通过",
+        "issue": "Step 1 对应陶总八步中的 ['定目的', '定角度', '客观分类']",
+        "severity": "-"
+      }
+    ],
+    "step_2": [
+      {
+        "check_item": "禁用词检查：逻辑",
+        "result": "不通过",
+        "issue": "发现禁用词'逻辑'，应替换为'规律'",
+        "severity": "中"
+      },
+      {
+        "check_item": "禁用词检查：对齐",
+        "result": "不通过",
+        "issue": "发现禁用词'对齐'，应替换为'领会'",
+        "severity": "中"
+      },
+      {
+        "check_item": "反对1：模型结构",
+        "result": "通过",
+        "issue": "标杆分析结构完整",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对2：原子库非流程",
+        "result": "通过",
+        "issue": "输出为可调用原子库",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对3：角色目标清晰",
+        "result": "通过",
+        "issue": "目标/名称已定义",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对4：客观数据",
+        "result": "通过",
+        "issue": "标杆分析有具体对象和做法（客观可验证）",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对5：角色目的出发",
+        "result": "通过",
+        "issue": "从角色和目的出发",
+        "severity": "-"
+      },
+      {
+        "check_item": "陶总八步校验：对比蒸馏",
+        "result": "通过",
+        "issue": "Step 2 对应陶总八步中的 ['对比蒸馏']",
+        "severity": "-"
+      }
+    ],
+    "step_3": [
+      {
+        "check_item": "禁用词检查",
+        "result": "通过",
+        "issue": "无禁用词",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对1：模型结构",
+        "result": "通过",
+        "issue": "数据关联结构完整",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对2：原子库非流程",
+        "result": "通过",
+        "issue": "输出为可调用原子库",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对3：角色目标清晰",
+        "result": "通过",
+        "issue": "目标/名称已定义",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对4：客观数据",
+        "result": "通过",
+        "issue": "数据关联有具体定义（客观数据）",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对5：角色目的出发",
+        "result": "通过",
+        "issue": "从角色和目的出发",
+        "severity": "-"
+      },
+      {
+        "check_item": "陶总八步校验：场景调用",
+        "result": "通过",
+        "issue": "Step 3 对应陶总八步中的 ['场景调用']",
+        "severity": "-"
+      }
+    ],
+    "step_4": [
+      {
+        "check_item": "禁用词检查：行业",
+        "result": "不通过",
+        "issue": "发现禁用词'行业'，应替换为'产业'",
+        "severity": "中"
+      },
+      {
+        "check_item": "反对1：模型结构",
+        "result": "通过",
+        "issue": "模型结构完整（角色/维度/动作）",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对2：原子库非流程",
+        "result": "通过",
+        "issue": "动作有触发条件（事件驱动）",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对3：角色目标清晰",
+        "result": "通过",
+        "issue": "角色体系已定义",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对4：客观数据",
+        "result": "通过",
+        "issue": "分析维度有客观数据定义",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对5：角色目的出发",
+        "result": "通过",
+        "issue": "从角色和目的出发",
+        "severity": "-"
+      },
+      {
+        "check_item": "陶总八步校验：提炼主维度, 标准化建模",
+        "result": "通过",
+        "issue": "Step 4 对应陶总八步中的 ['提炼主维度', '标准化建模']",
+        "severity": "-"
+      }
+    ],
+    "step_5": [
+      {
+        "check_item": "禁用词检查",
+        "result": "通过",
+        "issue": "无禁用词",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对1：模型结构",
+        "result": "通过",
+        "issue": "验证结构完整",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对2：原子库非流程",
+        "result": "通过",
+        "issue": "输出为可调用原子库",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对3：角色目标清晰",
+        "result": "通过",
+        "issue": "目标/名称已定义",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对4：客观数据",
+        "result": "通过",
+        "issue": "有客观数据支撑",
+        "severity": "-"
+      },
+      {
+        "check_item": "反对5：角色目的出发",
+        "result": "通过",
+        "issue": "从角色和目的出发",
+        "severity": "-"
+      },
+      {
+        "check_item": "陶总八步校验：监督迭代",
+        "result": "通过",
+        "issue": "Step 5 对应陶总八步中的 ['监督迭代']",
+        "severity": "-"
+      }
+    ]
+  },
+  "output_files": [
+    "《业务目标清单》",
+    "《标杆分析表》",
+    "《数据关联矩阵》",
+    "角色体系 + 分析模型 + 动作模型",
+    "《交叉验证报告》"
+  ]
+}
