@@ -1,0 +1,340 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+资产管理业务模型蒸馏示例输入
+
+使用方式：
+    python distillation_agent.py --input example_wealth_mgmt.yaml --output ./output
+"""
+
+import yaml
+
+EXAMPLE_YAML = """
+# ============================================
+# 业务描述：证券公司资产管理业务
+# ============================================
+
+business_description:
+  business_line: "证券公司资产管理业务"
+  core_goals:
+    - name: "产品创设"
+      definition: "完成从需求洞察到产品备案发行的全周期创设"
+      key_actions:
+        - "需求洞察与验证"
+        - "策略设计与回测"
+        - "产品结构设计"
+        - "合规审查"
+        - "备案发行"
+      metrics:
+        - "年度创设产品数量"
+        - "创设成功率（备案通过/总创设）"
+      boundary: "不包含代销产品（仅含自研产品）"
+    
+    - name: "产品销售"
+      definition: "完成产品从成立到客户签约认购的销售交付"
+      key_actions:
+        - "客户画像与匹配"
+        - "适当性审查"
+        - "产品推荐"
+        - "签约认购"
+      metrics:
+        - "年度销售额"
+        - "客户覆盖率"
+      boundary: "不包含机构客户直销（仅含零售渠道）"
+    
+    - name: "投后服务"
+      definition: "产品签约后持续跟踪净值、风险、关联交易"
+      key_actions:
+        - "净值跟踪与报告"
+        - "风险指标监控"
+        - "关联交易监测"
+        - "客户回访"
+      metrics:
+        - "客户满意度"
+        - "风险预警响应时间"
+      boundary: "不包含产品清盘（归属产品创设）"
+  
+  relationships:
+    依赖:
+      - "产品创设完成 → 产品销售启动"
+      - "产品销售完成 → 投后服务启动"
+    协同:
+      - "投后服务发现新需求 → 回流产品创设"
+
+# ============================================
+# 标杆分析
+# ============================================
+
+benchmarks:
+  - dimension: "产品创设"
+    benchmark_obj: "贝莱德（BlackRock）"
+    benchmark_practice: "Aladdin风险分析平台，全生命周期产品管理"
+    our_status: "策略回测系统已搭建，未系统化"
+    gap: "系统化差距大"
+    adoption: "调整后采用"
+    remark: "学习系统化产品创设流程"
+  
+  - dimension: "产品销售"
+    benchmark_obj: "华泰证券"
+    benchmark_practice: "AI涨乐APP，智能产品推荐"
+    our_status: "客户画像初步建立，推荐系统未上线"
+    gap: "推荐算法差距"
+    adoption: "暂不采用"
+    remark: "先完善客户画像数据"
+  
+  - dimension: "投后服务"
+    benchmark_obj: "摩根大通"
+    benchmark_practice: "JPM Coin区块链结算，实时投后跟踪"
+    our_status: "投后报告手工生成，未自动化"
+    gap: "自动化差距"
+    adoption: "调整后采用"
+    remark: "先自动化报告生成"
+
+# ============================================
+# 数据关联
+# ============================================
+
+data_matrix:
+  - indicator: "策略回测历史数据"
+    formula: "历史行情数据"
+    data_source: "Wind/同花顺"
+    access_path: "API拉取"
+    auto_manual: "自动"
+    remark: "至少5年数据"
+  
+  - indicator: "客户风险测评"
+    formula: "问卷评分"
+    data_source: "CRM系统"
+    access_path: "系统查询"
+    auto_manual: "自动"
+    remark: "每年更新"
+  
+  - indicator: "产品持仓数据"
+    formula: "日终清算"
+    data_source: "估值系统"
+    access_path: "系统导出"
+    auto_manual: "自动"
+    remark: "T+1日可用"
+
+# ============================================
+# 角色体系
+# ============================================
+
+roles:
+  - name: "资管产品官"
+    source_position: "资管产品团队"
+    core_responsibility: "产品创设与销售支持"
+    service_goal: "资管产品创设 + 产品销售"
+    role_definition: "你是资产管理业务的产品创设与销售专家"
+    goals:
+      - "创设成功率>=80%"
+      - "客户匹配率>=70%"
+    backstory: "拥有5年资管产品经验，熟悉各类策略和客户需求"
+    constraints:
+      必须做:
+        - "所有产品必须经过合规审查"
+        - "客户适当性必须匹配"
+      禁止做:
+        - "不得承诺保本保收益"
+        - "不得向不匹配客户推荐产品"
+  
+  - name: "合规守卫"
+    source_position: "合规风控团队"
+    core_responsibility: "合规风控专员"
+    service_goal: "全业务线合规兜底"
+    role_definition: "你是资管业务的合规风控专家"
+    goals:
+      - "合规审查通过率100%"
+      - "风险预警响应时间<4小时"
+    backstory: "拥有7年合规经验，熟悉资管监管要求"
+    constraints:
+      必须做:
+        - "所有产品必须经过合规审查"
+        - "关联交易必须监测"
+      禁止做:
+        - "不得放松合规标准"
+        - "不得遗漏风险预警"
+  
+  - name: "组织者"
+    source_position: "资管管理层"
+    core_responsibility: "整体统筹者"
+    service_goal: "资管业务整体经营"
+    role_definition: "你是资管业务的管理者"
+    goals:
+      - "年度规模目标达成"
+      - "团队资源利用率>=85%"
+
+# ============================================
+# 分析模型
+# ============================================
+
+analysis_dimensions:
+  - name: "产品需求"
+    plain_language: "这个产品有没有市场需求？"
+    objective_data: "市场调研/客户意向/竞品数据"
+    output: "需求真实性判断"
+    analysis_framework: "市场需求+竞争格局+规模预判"
+  
+  - name: "策略质量"
+    plain_language: "策略能不能赚钱？风险多大？"
+    objective_data: "历史回测/VaR/情景分析"
+    output: "策略可行性判断"
+    analysis_framework: "策略描述+回测结果+风险测算"
+  
+  - name: "结构合规"
+    plain_language: "产品结构合规吗？监管会批吗？"
+    objective_data: "监管要求/备案通过率"
+    output: "合规性判断"
+    analysis_framework: "产品结构+合规要求+监管态度"
+  
+  - name: "客户匹配"
+    plain_language: "适合哪些客户？"
+    objective_data: "客户画像/风险测评"
+    output: "适当性匹配结果"
+    analysis_framework: "客户画像+产品风险+匹配规则"
+  
+  - name: "投后风险"
+    plain_language: "运行后有没有风险？"
+    objective_data: "净值表现/风险指标/关联交易"
+    output: "风险预警"
+    analysis_framework: "净值跟踪+风险指标+关联交易"
+
+# ============================================
+# 动作模型
+# ============================================
+
+events:
+  - event_name: "产品立项"
+    trigger_condition: "需求洞察完成"
+    event_level: "重点"
+    actions:
+      - name: "需求评估"
+        trigger: "需求洞察完成"
+        steps:
+          - "评估需求真实性"
+          - "评估竞争格局"
+          - "预判规模"
+        output: "《立项评估表》"
+        exception_handling:
+          需求不足: "扩大调研"
+        deadline: "3个工作日"
+        risk_level: "必须确认"
+  
+  - event_name: "策略回测"
+    trigger_condition: "立项通过"
+    event_level: "重点"
+    actions:
+      - name: "回测执行"
+        trigger: "立项通过"
+        steps:
+          - "策略描述确认"
+          - "历史回测"
+          - "风险测算"
+        output: "《回测报告》"
+        exception_handling:
+          回测不通过: "优化策略"
+        deadline: "5个工作日"
+        risk_level: "必须确认"
+  
+  - event_name: "结构设计"
+    trigger_condition: "回测通过"
+    event_level: "重点"
+    actions:
+      - name: "结构设计"
+        trigger: "回测通过"
+        steps:
+          - "确定产品类型"
+          - "设计份额"
+          - "设计费率"
+        output: "《结构设计书》"
+        exception_handling:
+          结构不合规: "调整结构"
+        deadline: "5个工作日"
+        risk_level: "必须确认"
+  
+  - event_name: "合规审查"
+    trigger_condition: "合同初稿完成"
+    event_level: "重大"
+    actions:
+      - name: "合规审查"
+        trigger: "合同初稿完成"
+        steps:
+          - "审查合同合规"
+          - "审查招募书"
+          - "审查适当性"
+        output: "《合规意见》"
+        exception_handling:
+          条款违规: "修改条款"
+        deadline: "5个工作日"
+        risk_level: "必须确认"
+  
+  - event_name: "备案发行"
+    trigger_condition: "合规审查通过"
+    event_level: "重大"
+    actions:
+      - name: "备案提交"
+        trigger: "合规审查通过"
+        steps:
+          - "准备备案材料"
+          - "提交备案"
+          - "跟进进度"
+        output: "备案回执"
+        exception_handling:
+          备案退回: "修改材料"
+        deadline: "5个工作日"
+        risk_level: "必须确认"
+  
+  - event_name: "产品销售"
+    trigger_condition: "产品成立"
+    event_level: "重点"
+    actions:
+      - name: "客户匹配"
+        trigger: "产品成立"
+        steps:
+          - "客户画像"
+          - "适当性匹配"
+          - "推荐产品"
+        output: "《匹配报告》"
+        exception_handling:
+          匹配率低: "调整策略"
+        deadline: "持续"
+        risk_level: "必须确认"
+  
+  - event_name: "投后服务"
+    trigger_condition: "产品运行"
+    event_level: "常规"
+    actions:
+      - name: "投后跟踪"
+        trigger: "产品运行"
+        steps:
+          - "净值跟踪"
+          - "风险监控"
+          - "关联交易监测"
+        output: "《投后报告》"
+        exception_handling:
+          风险预警: "启动应急"
+        deadline: "按周期"
+        risk_level: "可以"
+
+# ============================================
+# 裁判验证
+# ============================================
+
+referee_validation:
+  referee_count: 2
+  referees:
+    - name: "产品经理A"
+      experience: "5年资管产品"
+      feedback: "策略回测需更多情景分析"
+    - name: "合规经理B"
+      experience: "3年合规"
+      feedback: "适当性审查需更严格"
+  overall_feedback: "模型框架合理，需加强风险测算"
+"""
+
+if __name__ == "__main__":
+    import sys
+    output_path = sys.argv[1] if len(sys.argv) > 1 else "example_wealth_mgmt.yaml"
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(EXAMPLE_YAML)
+    print(f"示例输入文件已生成：{output_path}")
