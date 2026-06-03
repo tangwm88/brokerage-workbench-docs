@@ -65,6 +65,55 @@
 
 ---
 
+## wealth-mgmt-distillation Skill（新增）
+- **文件**：`skills/wealth-mgmt-distillation/`（OpenClaw AgentSkill）
+- **打包文件**：`skills/wealth-mgmt-distillation.skill`
+- **GitHub**：https://github.com/tangwm88/brokerage-workbench-docs/tree/master/skills/wealth-mgmt-distillation
+- **版本**：v1.0
+- **定位**：OpenClaw 可加载的智能体技能——专门针对证券公司资产管理业务模型的蒸馏
+- **触发条件**：
+  1. 用户要求设计资产管理业务线的业务模型或智能体模型
+  2. 用户要求蒸馏资管业务知识或提炼资管业务标准
+  3. 用户要求为资产管理业务线设计角色体系、分析模型、规定动作模型
+  4. 用户提到"资管产品创设""产品销售""投后服务""适当性匹配""策略回测"
+  5. 用户要求设计资管产品官/合规守卫等资管智能体角色
+- **结构**：
+  - `SKILL.md`：核心工作流 + 资管业务模型设计指南
+  - `scripts/distillation_agent.py`：Python蒸馏引擎（复用 model-distillation）
+  - `references/wealth-mgmt-analysis-model.md`：资产管理业务分析模型（5维度详细设计）
+  - `references/wealth-mgmt-action-model.md`：资产管理业务规定动作模型（7事件详细设计）
+  - `references/example_wealth_mgmt.yaml`：资产管理业务完整示例输入
+- **核心角色**：资管产品官（产品创设+销售支持）+ 合规守卫（合规风控）+ 组织者（统筹）
+- **5维度分析模型**：产品需求/策略质量/结构合规/客户匹配/投后风险
+- **7事件动作模型**：产品立项→策略回测→结构设计→合规审查→备案发行→产品销售→投后服务
+- **配套**：model-distillation（通用蒸馏引擎）
+- **创建时间**：2026-06-03
+
+---
+
+## model-distillation Skill（新增）
+- **文件**：`skills/model-distillation/`（OpenClaw AgentSkill）
+- **打包文件**：`skills/model-distillation.skill`
+- **GitHub**：https://github.com/tangwm88/brokerage-workbench-docs/tree/master/skills/model-distillation
+- **版本**：v1.0
+- **定位**：OpenClaw 可加载的智能体技能——将企业业务知识按五步法蒸馏为可执行的业务模型
+- **触发条件**：
+  1. 用户要求设计新业务线的业务模型或智能体模型
+  2. 用户要求蒸馏业务知识或提炼业务标准
+  3. 用户要求设计角色体系、分析模型、规定动作模型
+  4. 用户提到"五步法""业务目标蒸馏""标杆分析""数据关联""模型定义""交叉验证"
+  5. 用户要求按陶总方法论或核心规则设计业务模型
+  6. 用户要求校验业务模型设计是否符合禁用词语表或陶总五大反对
+- **结构**：
+  - `SKILL.md`：核心工作流 + 核心规则 + 执行方式 + 检查清单
+  - `scripts/distillation_agent.py`：Python蒸馏引擎（内置核心规则校验）
+  - `references/design-spec-v1.2.md`：完整设计方案文档
+  - `references/example_bond_business.yaml`：投行债券发行业务完整示例
+- **打包方式**：`package_skill.py model-distillation/`
+- **创建时间**：2026-06-03
+
+---
+
 ## 业务模型蒸馏智能体脚本（新增）
 - **文件**：`scripts/distillation_agent.py`
 - **GitHub**：https://github.com/tangwm88/brokerage-workbench-docs/blob/master/scripts/distillation_agent.py
