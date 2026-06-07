@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 900px;
+  height: 1200px;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f8f9fa;
+  color: #333;
+  padding: 20px;
+}
+.header {
+  background: #1a1a2e;
+  color: white;
+  padding: 20px 25px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+.header .subtitle {
+  font-size: 13px;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+.purpose {
+  background: #fff;
+  border-left: 4px solid #e63946;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.purpose strong { color: #e63946; }
+
+.roles {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.role-card {
+  flex: 1;
+  background: #fff;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border-top: 3px solid #457b9d;
+  font-size: 12px;
+}
+.role-card h3 {
+  font-size: 14px;
+  color: #457b9d;
+  margin-bottom: 6px;
+}
+.role-card .tag {
+  display: inline-block;
+  background: #457b9d;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.main-grid {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.left-panel {
+  flex: 1.2;
+}
+.right-panel {
+  flex: 1;
+}
+
+.panel-title {
+  background: #1a1a2e;
+  color: white;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px 6px 0 0;
+}
+
+.dim-card {
+  background: #fff;
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  border-radius: 0 0 6px 6px;
+  font-size: 12px;
+}
+.dim-card h4 {
+  font-size: 13px;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dim-num {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: #e63946;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 18px;
+  font-size: 10px;
+}
+.dim-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.dim-table td, .dim-table th {
+  border: 1px solid #e0e0e0;
+  padding: 4px 6px;
+  text-align: left;
+}
+.dim-table th {
+  background: #f0f0f0;
+  font-weight: normal;
+  color: #555;
+}
+
+.step-flow {
+  background: #fff;
+  padding: 12px 14px;
+  border-radius: 0 0 6px 6px;
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.step-num {
+  width: 22px;
+  height: 22px;
+  background: #457b9d;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 22px;
+  font-size: 11px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.step-text {
+  flex: 1;
+}
+.step-time {
+  color: #e63946;
+  font-size: 10px;
+  margin-left: 6px;
+}
+
+.compliance {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.comp-card {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.comp-card h4 {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.comp-ok { background: #d4edda; border-top: 3px solid #28a745; }
+.comp-ok h4 { color: #28a745; }
+.comp-check { background: #fff3cd; border-top: 3px solid #ffc107; }
+.comp-check h4 { color: #ffc107; }
+.comp-no { background: #f8d7da; border-top: 3px solid #dc3545; }
+.comp-no h4 { color: #dc3545; }
+.comp-item {
+  padding: 2px 0;
+  font-size: 11px;
+}
+
+.checklist {
+  background: #fff;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.checklist h4 {
+  font-size: 14px;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  font-size: 11px;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.check-box {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid #28a745;
+  border-radius: 2px;
+}
+
+.footer {
+  text-align: center;
+  font-size: 10px;
+  color: #999;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>价格趋势智能体模型</h1>
+  <div class="subtitle">V1.0 | 编制依据：陶总业务模型方法论 | 核心规则：不可修改</div>
+</div>
+
+<div class="purpose">
+  <strong>目的：</strong>帮助投资顾问判断"现在是不是该建议投资者关注趋势变化的时候"。<strong>不预测股价、不代客下单、不承诺收益。</strong>
+</div>
+
+<div class="roles">
+  <div class="role-card">
+    <h3>投资者</h3>
+    <div>服务接收方</div>
+    <div>想知道现在该不该动</div>
+    <span class="tag">被服务</span>
+  </div>
+  <div class="role-card">
+    <h3>投资顾问</h3>
+    <div>服务交付方</div>
+    <div>调用智能体、审核输出</div>
+    <span class="tag">执行者</span>
+  </div>
+  <div class="role-card">
+    <h3>合规风控</h3>
+    <div>运营组织者</div>
+    <div>穿透监督、把控风险</div>
+    <span class="tag">监督者</span>
+  </div>
+</div>
+
+<div class="main-grid">
+  <div class="left-panel">
+    <div class="panel-title">业务分析模型（4维度）</div>
+    
+    <div class="dim-card">
+      <h4><span class="dim-num">1</span>市场环境（现在是什么天气）</h4>
+      <table class="dim-table">
+        <tr><th>指标</th><th>判断标准</th></tr>
+        <tr><td>波动状态</td><td>历史波动率前20%→大热天；中间60%→正常天；后20%→大冷天</td></tr>
+        <tr><td>情绪状态</td><td>预期远高于实际→恐慌；远低于实际→乐观过头</td></tr>
+        <tr><td>趋势方向</td><td>沪深全A指数上升/下降/横盘</td></tr>
+      </table>
+    </div>
+    
+    <div class="dim-card">
+      <h4><span class="dim-num">2</span>标的趋势（这个标怎么样）</h4>
+      <table class="dim-table">
+        <tr><th>指标</th><th>判断标准</th></tr>
+        <tr><td>走势形态</td><td>过去20日低点逐级抬高→上升；高点逐级降低→下降；上下乱晃→横盘</td></tr>
+        <tr><td>高低位置</td><td>近期高低点对比：接近天花板/半山腰/接近地板</td></tr>
+        <tr><td>趋势强弱</td><td>短期平均价格斜率+价格偏离度</td></tr>
+      </table>
+    </div>
+    
+    <div class="dim-card">
+      <h4><span class="dim-num">3</span>时间一致（三个时间框架是否同向）</h4>
+      <table class="dim-table">
+        <tr><th>日线</th><th>60分钟</th><th>15分钟</th><th>信号</th></tr>
+        <tr><td>涨</td><td>涨</td><td>涨</td><td><strong>强</strong></td></tr>
+        <tr><td>涨</td><td>涨</td><td>跌</td><td>中等</td></tr>
+        <tr><td>三个打架</td><td>矛盾</td><td>矛盾</td><td>无</td></tr>
+      </table>
+    </div>
+    
+    <div class="dim-card">
+      <h4><span class="dim-num">4</span>风险防护（亏了怎么办）</h4>
+      <table class="dim-table">
+        <tr><th>指标</th><th>判断标准</th></tr>
+        <tr><td>仓位建议</td><td>大热天→轻仓/空仓；正常天→半仓；大冷天→空仓</td></tr>
+        <tr><td>止损参考</td><td>根据近期平均波动大小动态调整，不是固定百分比</td></tr>
+      </table>
+    </div>
+  </div>
+  
+  <div class="right-panel">
+    <div class="panel-title">规定动作模型（8步）</div>
+    <div class="step-flow">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-text">验证投资者适当性</div>
+        <span class="step-time">30s</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-text">调取市场环境数据</div>
+        <span class="step-time">30s</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-text">调取标的趋势数据</div>
+        <span class="step-time">30s</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-text">判断时间一致性</div>
+        <span class="step-time">30s</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-text">生成风险防护建议</div>
+        <span class="step-time">30s</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-text">生成完整报告</div>
+        <span class="step-time">30s</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">7</div>
+        <div class="step-text"><strong>投资顾问审核</strong></div>
+        <span class="step-time">2min</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">8</div>
+        <div class="step-text">对外输出</div>
+        <span class="step-time">1min</span>
+      </div>
+      <div style="text-align:center; margin-top:10px; font-size:11px; color:#666;">
+        总时限：<strong style="color:#e63946;">3-5分钟</strong> | 输出必须含免责声明
+      </div>
+    </div>
+    
+    <div class="panel-title" style="margin-top:10px;">三句话法（合规分级）</div>
+    <div class="compliance">
+      <div class="comp-card comp-ok">
+        <h4>可以</h4>
+        <div class="comp-item">• 市场环境查询</div>
+        <div class="comp-item">• 标的趋势方向</div>
+        <div class="comp-item">• 历史数据展示</div>
+        <div style="font-size:10px; margin-top:6px; color:#666;">AI自动生成，员工按需查阅</div>
+      </div>
+      <div class="comp-card comp-check">
+        <h4>必须确认</h4>
+        <div class="comp-item">• 含买卖建议</div>
+        <div class="comp-item">• 含仓位建议</div>
+        <div class="comp-item">• 含止损建议</div>
+        <div style="font-size:10px; margin-top:6px; color:#666;">AI→人工逐条审核→对外</div>
+      </div>
+      <div class="comp-card comp-no">
+        <h4>不</h4>
+        <div class="comp-item">• 预测股价</div>
+        <div class="comp-item">• 代客下单</div>
+        <div class="comp-item">• 保本承诺</div>
+        <div style="font-size:10px; margin-top:6px; color:#666;">AI直接拒绝，标记原因</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="checklist">
+  <h4>检查清单（陶总五大反对）</h4>
+  <div class="check-grid">
+    <div class="check-item"><div class="check-box"></div> 有明确4维度分析模型 + 8步动作模型</div>
+    <div class="check-item"><div class="check-box"></div> 每一步有标准、有输出、有异常处理</div>
+    <div class="check-item"><div class="check-box"></div> 角色只分三类，智能体是工具不是角色</div>
+    <div class="check-item"><div class="check-box"></div> 每个维度有具体指标、判断标准、可追溯</div>
+    <div class="check-item"><div class="check-box"></div> 从投资者和顾问视角出发，不堆砌技术名词</div>
+    <div class="check-item"><div class="check-box"></div> 不预测股价、不代客下单、不承诺收益</div>
+  </div>
+</div>
+
+<div class="footer">
+  价格趋势智能体模型 V1.0 | 2026-06-07 | 编制依据：陶总业务模型方法论 | 核心规则：不可修改
+</div>
+
+</body>
+</html>
