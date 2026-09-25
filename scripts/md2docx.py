@@ -14,7 +14,7 @@ font.name = 'Microsoft YaHei'
 font.size = Pt(10.5)
 style.element.rPr.rFonts.set(qn('w:eastAsia'), 'Microsoft YaHei')
 
-with open('资产管理自动驾驶平台设计方案 v2.1.md', 'r', encoding='utf-8') as f:
+with open('资产管理自动驾驶平台设计方案 v3.0.md', 'r', encoding='utf-8') as f:
     lines = f.readlines()
 
 i = 0
@@ -110,6 +110,6 @@ while i < len(lines):
     p = doc.add_paragraph(line)
     i += 1
 
-output_path = '资产管理自动驾驶平台设计方案 v2.1.docx'
+output_path = '资产管理自动驾驶平台设计方案 v3.0.docx'
 doc.save(output_path)
 print(f'OK: {output_path}')
