@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background:#f5f5f0; padding:20px; }
+.sheet { width:1200px; margin:0 auto; background:#fff; padding:40px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+
+.title { font-size:26px; font-weight:bold; color:#1a3c2a; text-align:center; margin-bottom:6px; }
+.subtitle { font-size:12px; color:#888; text-align:center; margin-bottom:25px; }
+
+/* 主线标题 */
+.section-title { font-size:18px; font-weight:bold; color:#1a3c2a; margin:30px 0 15px 0; padding-bottom:8px; border-bottom:3px solid #1a3c2a; }
+.section-title .tag { font-size:12px; font-weight:normal; color:#666; margin-left:10px; }
+
+/* 类型色块说明 */
+.type-legend { display:flex; gap:15px; margin-bottom:15px; justify-content:center; }
+.type-box { display:flex; align-items:center; gap:6px; font-size:12px; color:#555; }
+.type-dot { width:14px; height:14px; border-radius:3px; }
+.dot1 { background:#c62828; }  /* 类型1 高门槛 */
+.dot2 { background:#2e7d32; }  /* 类型2 家庭 */
+.dot3 { background:#1565c0; }  /* 类型3 文化 */
+.dot5 { background:#f9a825; }  /* 类型5 过渡 */
+
+/* 大表：产品×维度 */
+.main-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+.main-table th { background:#1a3c2a; color:#fff; padding:10px 6px; text-align:center; font-size:13px; border:1px solid #1a3c2a; }
+.main-table td { padding:8px 6px; border:1px solid #ddd; text-align:center; vertical-align:middle; }
+.main-table tr:nth-child(even) { background:#fafafa; }
+
+/* 产品名列 */
+.product-name { font-weight:bold; font-size:13px; text-align:left !important; padding-left:10px !important; }
+
+/* 类型标识列 */
+.type-cell { font-weight:bold; font-size:11px; color:#fff; border-radius:3px; padding:2px 6px; display:inline-block; }
+.type1-bg { background:#c62828; }
+.type2-bg { background:#2e7d32; }
+.type3-bg { background:#1565c0; }
+.type5-bg { background:#f9a825; color:#333; }
+
+/* 维度档位样式 */
+.level-high { background:#ffcdd2; color:#c62828; font-weight:bold; border-radius:3px; padding:2px 8px; }
+.level-mid { background:#fff9c4; color:#f57f17; font-weight:bold; border-radius:3px; padding:2px 8px; }
+.level-low { background:#c8e6c9; color:#2e7d32; font-weight:bold; border-radius:3px; padding:2px 8px; }
+.level-ok { background:#c8e6c9; color:#2e7d32; font-weight:bold; border-radius:3px; padding:2px 8px; }
+.level-warn { background:#ffcc80; color:#e65100; font-weight:bold; border-radius:3px; padding:2px 8px; }
+.level-no { background:#ffcdd2; color:#c62828; font-weight:bold; border-radius:3px; padding:2px 8px; }
+.level-window { background:#ef9a9a; color:#b71c1c; font-weight:bold; border-radius:3px; padding:2px 8px; }
+
+/* 排除条件 */
+.exclude-text { font-size:11px; color:#555; text-align:left !important; line-height:1.5; }
+.exclude-text .x { color:#c62828; font-weight:bold; }
+
+/* 维度说明卡片 */
+.dim-cards { display:flex; gap:12px; margin:15px 0 25px 0; }
+.dim-card { flex:1; background:#fff; border:2px solid #ddd; border-radius:8px; padding:12px; }
+.dim-card .num { font-size:20px; font-weight:bold; color:#1a3c2a; margin-bottom:4px; }
+.dim-card .name { font-size:14px; font-weight:bold; color:#333; margin-bottom:6px; }
+.dim-card .levels { font-size:11px; color:#555; line-height:1.6; }
+.dim-card .levels span { display:inline-block; margin:2px 4px 2px 0; padding:1px 5px; border-radius:3px; font-size:10px; }
+
+/* 流程图 */
+.flow-wrap { display:flex; gap:8px; margin:20px 0; align-items:stretch; }
+.flow-box { flex:1; background:#f5f5f5; border:1px solid #ccc; border-radius:6px; padding:10px; text-align:center; }
+.flow-box .step { font-size:11px; color:#888; margin-bottom:4px; }
+.flow-box .action { font-size:13px; font-weight:bold; color:#333; margin-bottom:4px; }
+.flow-box .detail { font-size:10px; color:#666; line-height:1.4; }
+.flow-arrow { display:flex; align-items:center; color:#999; font-size:20px; }
+
+/* 组合策略 */
+.combo-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+.combo-table th { background:#f5f5f5; padding:8px; text-align:left; border-bottom:2px solid #333; }
+.combo-table td { padding:8px; border-bottom:1px solid #eee; }
+.combo-table .combo-tag { display:inline-block; padding:2px 8px; border-radius:3px; font-size:11px; margin:2px; }
+
+/* 洞察 */
+.insight-box { background:#fff8e1; border-left:4px solid #ffc107; padding:12px 15px; margin-top:20px; }
+.insight-box h4 { font-size:14px; color:#f57f17; margin-bottom:8px; }
+.insight-box ul { font-size:12px; color:#555; line-height:1.8; padding-left:18px; }
+
+.page-note { font-size:10px; color:#999; text-align:center; margin-top:20px; border-top:1px solid #eee; padding-top:10px; }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+<div class="title">贵州景区产品模型</div>
+<div class="subtitle">以产品维度 × 产品类型为主线 | 5维度判定 × 5类型聚类 | 2026-06-12</div>
+
+<!-- 类型图例 -->
+<div class="type-legend">
+  <div class="type-box"><div class="type-dot dot1"></div>类型1：高门槛深度自然</div>
+  <div class="type-box"><div class="type-dot dot2"></div>类型2：家庭友好自然</div>
+  <div class="type-box"><div class="type-dot dot3"></div>类型3：轻体力文化沉浸</div>
+  <div class="type-box"><div class="type-dot dot5"></div>类型5：过渡缓冲</div>
+  <div class="type-box" style="color:#999;">（类型4生态放松为当前缺口）</div>
+</div>
+
+<!-- 维度说明 -->
+<div class="dim-cards">
+  <div class="dim-card">
+    <div class="num">1</div>
+    <div class="name">体验本质</div>
+    <div class="levels">
+      <span class="level-ok">自然震撼</span>
+      <span class="level-ok">文化沉浸</span>
+      <span class="level-warn">生态放松</span>
+    </div>
+  </div>
+  <div class="dim-card">
+    <div class="num">2</div>
+    <div class="name">投入门槛</div>
+    <div class="levels">
+      <span class="level-low">低</span>
+      <span class="level-mid">中</span>
+      <span class="level-high">高</span>
+    </div>
+  </div>
+  <div class="dim-card">
+    <div class="num">3</div>
+    <div class="name">人群宽容度</div>
+    <div class="levels">
+      <span class="level-low">全年龄</span>
+      <span class="level-mid">中大龄</span>
+      <span class="level-high">成人专属</span>
+    </div>
+  </div>
+  <div class="dim-card">
+    <div class="num">4</div>
+    <div class="name">时间窗口</div>
+    <div class="levels">
+      <span class="level-low">全年无差</span>
+      <span class="level-mid">季节加分</span>
+      <span class="level-warn">季节打折</span>
+      <span class="level-window">窗口期</span>
+    </div>
+  </div>
+  <div class="dim-card">
+    <div class="num">5</div>
+    <div class="name">反向排除</div>
+    <div class="levels">
+      <span style="font-size:10px;color:#666;">≥2条客观排除条件<br>说清不适合谁</span>
+    </div>
+  </div>
+</div>
+
+<!-- 主线大表：产品×维度 -->
+<div class="section-title">主线一：10产品 × 5维度 总表</div>
+
+<table class="main-table">
+  <tr>
+    <th style="width:90px;">产品</th>
+    <th style="width:70px;">类型</th>
+    <th style="width:100px;">维度1<br>体验本质</th>
+    <th style="width:80px;">维度2<br>投入门槛</th>
+    <th style="width:100px;">维度3<br>人群宽容度</th>
+    <th style="width:100px;">维度4<br>时间窗口</th>
+    <th style="width:200px;">维度5<br>核心排除</th>
+  </tr>
+  
+  <tr style="background:#ffebee;">
+    <td class="product-name">梵净山</td>
+    <td><span class="type-cell type1-bg">类型1</span></td>
+    <td>自然震撼</td>
+    <td><span class="level-high">高</span></td>
+    <td><span class="level-high">成人专属</span></td>
+    <td><span class="level-warn">季节打折</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 60岁+老人<br><span class="x">✕</span> 5岁以下儿童<br><span class="x">✕</span> 恐高/膝盖不好</td>
+  </tr>
+  
+  <tr style="background:#ffebee;">
+    <td class="product-name">赤水丹霞</td>
+    <td><span class="type-cell type1-bg">类型1</span></td>
+    <td>自然震撼</td>
+    <td><span class="level-high">高</span></td>
+    <td><span class="level-mid">中大龄</span></td>
+    <td><span class="level-mid">季节加分</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 时间&lt;2天<br><span class="x">✕</span> 追求单体震撼</td>
+  </tr>
+  
+  <tr style="background:#e8f5e9;">
+    <td class="product-name">小七孔</td>
+    <td><span class="type-cell type2-bg">类型2</span></td>
+    <td>自然震撼</td>
+    <td><span class="level-mid">中</span></td>
+    <td><span class="level-low">全年龄</span></td>
+    <td><span class="level-mid">季节加分</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 拒绝任何步行<br><span class="x">✕</span> 追求极致震撼</td>
+  </tr>
+  
+  <tr style="background:#e8f5e9;">
+    <td class="product-name">百里杜鹃</td>
+    <td><span class="type-cell type2-bg">类型2</span></td>
+    <td>自然震撼</td>
+    <td><span class="level-low">低</span></td>
+    <td><span class="level-low">全年龄</span></td>
+    <td><span class="level-window">窗口期</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 非花期（3-4月外）<br><span class="x">✕</span> 花粉过敏</td>
+  </tr>
+  
+  <tr style="background:#e8f5e9;">
+    <td class="product-name">织金洞</td>
+    <td><span class="type-cell type2-bg">类型2</span></td>
+    <td>自然震撼</td>
+    <td><span class="level-mid">中</span></td>
+    <td><span class="level-mid">中大龄</span></td>
+    <td><span class="level-low">全年无差</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 幽闭恐惧<br><span class="x">✕</span> 体力极差</td>
+  </tr>
+  
+  <tr style="background:#e8f5e9;">
+    <td class="product-name">黄果树</td>
+    <td><span class="type-cell type2-bg">类型2</span></td>
+    <td>自然震撼</td>
+    <td><span class="level-mid">中</span></td>
+    <td><span class="level-mid">中大龄</span></td>
+    <td><span class="level-mid">季节加分</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 婴幼儿（水帘洞）<br><span class="x">✕</span> 腿脚不便老人</td>
+  </tr>
+  
+  <tr style="background:#e8f5e9;">
+    <td class="product-name">马岭河</td>
+    <td><span class="type-cell type2-bg">类型2</span></td>
+    <td>自然震撼</td>
+    <td><span class="level-mid">中</span></td>
+    <td><span class="level-mid">中大龄</span></td>
+    <td><span class="level-warn">季节打折</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 老人（湿滑）<br><span class="x">✕</span> 幼儿/恐高</td>
+  </tr>
+  
+  <tr style="background:#e3f2fd;">
+    <td class="product-name">西江苗寨</td>
+    <td><span class="type-cell type3-bg">类型3</span></td>
+    <td>文化沉浸</td>
+    <td><span class="level-mid">中</span></td>
+    <td><span class="level-low">全年龄</span></td>
+    <td><span class="level-low">全年无差</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 追求原生态<br><span class="x">✕</span> 只看自然风光</td>
+  </tr>
+  
+  <tr style="background:#e3f2fd;">
+    <td class="product-name">镇远古镇</td>
+    <td><span class="type-cell type3-bg">类型3</span></td>
+    <td>文化沉浸</td>
+    <td><span class="level-low">低</span></td>
+    <td><span class="level-low">全年龄</span></td>
+    <td><span class="level-low">全年无差</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 追求高端住宿<br><span class="x">✕</span> 喜欢热闹酒吧</td>
+  </tr>
+  
+  <tr style="background:#fff3e0;">
+    <td class="product-name">青岩古镇</td>
+    <td><span class="type-cell type5-bg">类型5</span></td>
+    <td>文化沉浸</td>
+    <td><span class="level-low">极低</span></td>
+    <td><span class="level-low">全年龄</span></td>
+    <td><span class="level-low">全年无差</span></td>
+    <td class="exclude-text"><span class="x">✕</span> 专程远道而来<br><span class="x">✕</span> 追求深度历史</td>
+  </tr>
+</table>
+
+<!-- 类型 × 旅客画像匹配 -->
+<div class="section-title">主线二：5类型 × 旅客画像 匹配表</div>
+
+<table class="combo-table">
+  <tr>
+    <th style="width:180px;">旅客画像</th>
+    <th style="width:150px;">首选类型</th>
+    <th style="width:150px;">次选类型</th>
+    <th style="width:150px;">不推荐</th>
+    <th>关键判断</th>
+  </tr>
+  <tr>
+    <td>带6-14岁儿童+父母</td>
+    <td><span class="combo-tag" style="background:#e8f5e9;color:#2e7d32;">类型2</span></td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1</span></td>
+    <td>类型1体力门槛高，安全排除</td>
+  </tr>
+  <tr>
+    <td>25-35岁+体力充沛+独行</td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1</span></td>
+    <td><span class="combo-tag" style="background:#e8f5e9;color:#2e7d32;">类型2</span></td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td>类型1是核心体验，不满足条件的不要硬推</td>
+  </tr>
+  <tr>
+    <td>50-60岁+体力有限+文化兴趣</td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td><span class="combo-tag" style="background:#e8f5e9;color:#2e7d32;">类型2</span></td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1</span></td>
+    <td>类型3零门槛+文化深度，类型2百里杜鹃/小七孔全年龄</td>
+  </tr>
+  <tr>
+    <td>30-45岁+职场压力+想放松</td>
+    <td><span class="combo-tag" style="background:#fce4ec;color:#880e4f;">类型4(缺)</span></td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1/2</span></td>
+    <td>类型4生态放松当前缺口，需补充茂兰/竹海/温泉</td>
+  </tr>
+  <tr>
+    <td>首次到访+3天</td>
+    <td><span class="combo-tag" style="background:#e8f5e9;color:#2e7d32;">类型2</span></td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1</span></td>
+    <td>经典组合：自然+文化覆盖，类型1时间不够</td>
+  </tr>
+  <tr>
+    <td>摄影爱好者</td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1</span></td>
+    <td><span class="combo-tag" style="background:#e8f5e9;color:#2e7d32;">类型2</span></td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td>类型1出硬照（梵净山云海/赤水丹霞），百里杜鹃花期限定</td>
+  </tr>
+  <tr>
+    <td>预算有限（经济型）</td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td><span class="combo-tag" style="background:#e8f5e9;color:#2e7d32;">类型2</span></td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1</span></td>
+    <td>青岩10元/镇远免费古城，类型1消费刚性高</td>
+  </tr>
+  <tr>
+    <td>奢华型消费</td>
+    <td><span class="combo-tag" style="background:#e3f2fd;color:#1565c0;">类型3</span></td>
+    <td><span class="combo-tag" style="background:#ffebee;color:#c62828;">类型1</span></td>
+    <td>—</td>
+    <td>贵州奢华选项有限，西江高端民宿+私人包车，需如实告知</td>
+  </tr>
+</table>
+
+<!-- 6步流程 -->
+<div class="section-title">AI 6步匹配流程</div>
+
+<div class="flow-wrap">
+  <div class="flow-box">
+    <div class="step">STEP 1</div>
+    <div class="action">体验目的</div>
+    <div class="detail">目的→匹配类型<br>打卡→类型2<br>文化→类型3<br>放松→类型4</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">
+    <div class="step">STEP 2</div>
+    <div class="action">投入门槛</div>
+    <div class="detail">体力/时间/预算<br>任一低于门槛<br>→降级或排除</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">
+    <div class="step">STEP 3</div>
+    <div class="action">人群过滤</div>
+    <div class="detail">含幼儿/老人<br>→排除成人专属<br>含孕妇→仅全年龄</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">
+    <div class="step">STEP 4</div>
+    <div class="action">时间窗口</div>
+    <div class="detail">百里杜鹃非花期<br>→直接排除<br>梵净山冬季→预警</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">
+    <div class="step">STEP 5</div>
+    <div class="action">反向排除</div>
+    <div class="detail">5岁儿童→排除黄果树<br>幽闭恐惧→排除织金洞</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">
+    <div class="step">STEP 6</div>
+    <div class="action">组合优化</div>
+    <div class="detail">类型交替<br>地理相邻<br>强度递减</div>
+  </div>
+</div>
+
+<!-- 行程组合 -->
+<div class="section-title">类型组合策略（行程设计）</div>
+
+<table class="combo-table">
+  <tr>
+    <th style="width:60px;">天数</th>
+    <th style="width:350px;">推荐组合</th>
+    <th style="width:150px;">类型配比</th>
+    <th>为什么这样配</th>
+  </tr>
+  <tr>
+    <td>2天</td>
+    <td>小七孔 + 西江苗寨</td>
+    <td>类型2 + 类型3</td>
+    <td>自然+文化互补，黔东南方向相邻</td>
+  </tr>
+  <tr>
+    <td>3天</td>
+    <td>黄果树 + 织金洞 + 镇远古镇</td>
+    <td>类型2+2+3</td>
+    <td>安顺同方向（黄果树+织金洞），镇远缓冲</td>
+  </tr>
+  <tr>
+    <td>4天</td>
+    <td>梵净山 + 镇远 + 小七孔 + 西江</td>
+    <td>类型1+3+2+3</td>
+    <td>挑战后必须缓冲（镇远），再转自然+文化</td>
+  </tr>
+  <tr>
+    <td>5天</td>
+    <td>黄果树+织金洞+西江+镇远+小七孔</td>
+    <td>2+2+3+3+2</td>
+    <td>经典大环线，类型交替不累</td>
+  </tr>
+</table>
+
+<!-- 核心洞察 -->
+<div class="insight-box">
+  <h4>核心洞察</h4>
+  <ul>
+    <li><b>类型1（梵净山/赤水）</b>是贵州差异化王牌，但门槛高→精准推送而非广撒网</li>
+    <li><b>类型2（小七孔/黄果树等）</b>是"现金牛"，产品最多（5个）→默认推荐池</li>
+    <li><b>类型3（西江）</b>消费弹性被低估——住宿100元到3000元+，门槛是商业化接受度而非钱</li>
+    <li><b>类型4</b>当前缺口，AI遇到"想放松"旅客会推荐困难→需补充茂兰/竹海/温泉</li>
+    <li><b>类型5（青岩）</b>是被忽略的行程粘合剂→应自动填充空档，而非等旅客问</li>
+    <li><b>百里杜鹃</b>窗口期仅20天（3月下旬-4月中旬），非花期=普通山林，AI必须刚性排除</li>
+  </ul>
+</div>
+
+<div class="page-note">打开浏览器→打印→保存为PDF。绿色=低/全年龄/安全，黄色=中/预警，红色=高/成人专属/排除，深红=窗口期刚性排除。</div>
+
+</div>
+
+</body>
+</html>

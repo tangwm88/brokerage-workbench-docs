@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background:#f5f5f0; padding:30px; }
+.sheet { width:1000px; margin:0 auto; background:#fff; padding:40px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+
+.title { font-size:24px; font-weight:bold; color:#1a3c2a; text-align:center; margin-bottom:30px; letter-spacing:1px; }
+
+/* 横向两栏 */
+.main { display:flex; gap:30px; }
+.column { flex:1; }
+
+/* 标题栏 */
+.col-title { font-size:16px; font-weight:bold; color:#fff; padding:10px 15px; border-radius:6px 6px 0 0; text-align:center; }
+.title-dim { background:#1565c0; }
+.title-type { background:#2e7d32; }
+
+.col-body { border:2px solid #ddd; border-top:none; border-radius:0 0 6px 6px; padding:20px; background:#fafafa; }
+
+/* 维度部分 */
+.dim-item { margin-bottom:18px; }
+.dim-item:last-child { margin-bottom:0; }
+.dim-num { display:inline-block; width:22px; height:22px; background:#1565c0; color:#fff; border-radius:50%; text-align:center; line-height:22px; font-size:12px; font-weight:bold; margin-right:6px; }
+.dim-name { font-size:14px; font-weight:bold; color:#333; display:inline; }
+.dim-levels { margin-top:6px; padding-left:28px; }
+.level-tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; margin:2px 3px 2px 0; }
+.l-red { background:#ffcdd2; color:#c62828; }
+.l-yellow { background:#fff9c4; color:#f57f17; }
+.l-green { background:#c8e6c9; color:#2e7d32; }
+.l-blue { background:#bbdefb; color:#1565c0; }
+.l-orange { background:#ffe0b2; color:#e65100; }
+.l-darkred { background:#ef9a9a; color:#b71c1c; }
+
+/* 类型部分 */
+.type-item { margin-bottom:16px; border-left:4px solid; padding-left:12px; }
+.type-item:last-child { margin-bottom:0; }
+.t1 { border-color:#c62828; }  /* 类型1 */
+.t2 { border-color:#2e7d32; }  /* 类型2 */
+.t3 { border-color:#1565c0; }  /* 类型3 */
+.t4 { border-color:#6a1b9a; }  /* 类型4 */
+.t5 { border-color:#f9a825; }  /* 类型5 */
+
+.type-name { font-size:14px; font-weight:bold; color:#333; margin-bottom:4px; }
+.t1 .type-name { color:#c62828; }
+.t2 .type-name { color:#2e7d32; }
+.t3 .type-name { color:#1565c0; }
+.t4 .type-name { color:#6a1b9a; }
+.t5 .type-name { color:#f57f17; }
+
+.type-products { font-size:11px; color:#555; margin-bottom:4px; }
+.type-products span { display:inline-block; background:#f0f0f0; padding:2px 6px; border-radius:3px; margin:2px 2px 0 0; font-size:10px; }
+.type-desc { font-size:11px; color:#666; line-height:1.5; }
+
+/* 底部关联 */
+.connector { margin-top:25px; text-align:center; }
+.arrow-down { font-size:28px; color:#999; }
+.connector-text { font-size:13px; color:#555; margin-top:8px; font-weight:bold; }
+
+/* 速查表 */
+.quick-ref { margin-top:25px; border:2px solid #1a3c2a; border-radius:8px; padding:15px; background:#fff; }
+.quick-ref-title { font-size:14px; font-weight:bold; color:#1a3c2a; text-align:center; margin-bottom:12px; }
+.quick-table { width:100%; border-collapse:collapse; font-size:11px; }
+.quick-table th { background:#1a3c2a; color:#fff; padding:6px; text-align:center; }
+.quick-table td { padding:5px 6px; text-align:center; border-bottom:1px solid #eee; }
+.quick-table td:first-child { text-align:left; font-weight:bold; }
+.ok { color:#2e7d32; font-weight:bold; }
+.no { color:#c62828; font-weight:bold; }
+.warn { color:#e65100; font-weight:bold; }
+
+/* 页脚 */
+.footer { margin-top:20px; font-size:10px; color:#999; text-align:center; }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+<div class="title">贵州景区产品模型</div>
+
+<div class="main">
+
+  <!-- 左栏：产品维度 -->
+  <div class="column">
+    <div class="col-title title-dim">产品维度（5维度判定）</div>
+    <div class="col-body">
+      
+      <div class="dim-item">
+        <span class="dim-num">1</span><span class="dim-name">体验本质</span>
+        <div class="dim-levels">
+          <span class="level-tag l-green">自然震撼</span>
+          <span class="level-tag l-blue">文化沉浸</span>
+          <span class="level-tag l-orange">生态放松</span>
+        </div>
+      </div>
+      
+      <div class="dim-item">
+        <span class="dim-num">2</span><span class="dim-name">投入门槛</span>
+        <div class="dim-levels">
+          <span class="level-tag l-green">低（≤150元/半日/步行1h）</span>
+          <span class="level-tag l-yellow">中（150-300元/1天/2-3h）</span>
+          <span class="level-tag l-red">高（≥300元/2天+/4h+）</span>
+        </div>
+      </div>
+      
+      <div class="dim-item">
+        <span class="dim-num">3</span><span class="dim-name">人群宽容度</span>
+        <div class="dim-levels">
+          <span class="level-tag l-green">全年龄（轮椅/幼儿/老人）</span>
+          <span class="level-tag l-yellow">中大龄友好（6岁+/健康老人）</span>
+          <span class="level-tag l-red">成人专属（18-55岁/体力充沛）</span>
+        </div>
+      </div>
+      
+      <div class="dim-item">
+        <span class="dim-num">4</span><span class="dim-name">时间窗口</span>
+        <div class="dim-levels">
+          <span class="level-tag l-green">全年无差</span>
+          <span class="level-tag l-yellow">季节加分</span>
+          <span class="level-tag l-orange">季节打折</span>
+          <span class="level-tag l-darkred">窗口期（错过=白去）</span>
+        </div>
+      </div>
+      
+      <div class="dim-item">
+        <span class="dim-num">5</span><span class="dim-name">反向排除</span>
+        <div class="dim-levels">
+          <span class="level-tag l-red">≥2条客观排除条件</span>
+          <span class="level-tag" style="background:#f5f5f5;color:#666;">说清不适合谁</span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- 右栏：产品类型 -->
+  <div class="column">
+    <div class="col-title title-type">产品类型（5类型聚类）</div>
+    <div class="col-body">
+      
+      <div class="type-item t1">
+        <div class="type-name">类型1：高门槛深度自然</div>
+        <div class="type-products">
+          <span>梵净山</span><span>赤水丹霞</span>
+        </div>
+        <div class="type-desc">25-45岁·体力充沛·无老人幼儿·≥2天·舒适型起步</div>
+      </div>
+      
+      <div class="type-item t2">
+        <div class="type-name">类型2：家庭友好自然奇观</div>
+        <div class="type-products">
+          <span>小七孔</span><span>黄果树</span><span>织金洞</span><span>百里杜鹃</span><span>马岭河</span>
+        </div>
+        <div class="type-desc">30-50岁父母+6-14岁·1-3天·经济到舒适型·默认推荐池</div>
+      </div>
+      
+      <div class="type-item t3">
+        <div class="type-name">类型3：轻体力文化沉浸</div>
+        <div class="type-products">
+          <span>西江苗寨</span><span>镇远古镇</span><span>青岩古镇</span>
+        </div>
+        <div class="type-desc">全年龄·体力有限·0.5-2天·全区间·商业化接受度是门槛</div>
+      </div>
+      
+      <div class="type-item t4">
+        <div class="type-name">类型4：生态放松（缺口）</div>
+        <div class="type-products">
+          <span>茂兰</span><span>竹海</span><span>温泉</span><span>万峰林</span><span style="background:#ffebee;color:#c62828;">待补充</span>
+        </div>
+        <div class="type-desc">⚠️ 当前缺口·30-55岁职场/银发·需补充后模型才完整</div>
+      </div>
+      
+      <div class="type-item t5">
+        <div class="type-name">类型5：过渡/缓冲</div>
+        <div class="type-products">
+          <span>青岩古镇</span>
+        </div>
+        <div class="type-desc">自动填充空档·0.5天·10元·不主动推荐只作缓冲</div>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+
+<!-- 关联说明 -->
+<div class="connector">
+  <div class="arrow-down">↓</div>
+  <div class="connector-text">5维度判定 → 匹配类型 → 类型内产品排序 → 组合优化 → 输出推荐</div>
+</div>
+
+<!-- 速查表 -->
+<div class="quick-ref">
+  <div class="quick-ref-title">10产品 × 关键维度 速查</div>
+  <table class="quick-table">
+    <tr>
+      <th>产品</th>
+      <th>类型</th>
+      <th>门槛</th>
+      <th>人群</th>
+      <th>时间窗口</th>
+      <th>核心排除</th>
+    </tr>
+    <tr>
+      <td style="color:#c62828;">梵净山</td>
+      <td>高门槛深度自然</td>
+      <td class="no">高</td>
+      <td class="no">成人专属</td>
+      <td class="warn">打折</td>
+      <td class="no">老人/幼儿/恐高</td>
+    </tr>
+    <tr>
+      <td style="color:#c62828;">赤水丹霞</td>
+      <td>高门槛深度自然</td>
+      <td class="no">高</td>
+      <td class="warn">中大龄</td>
+      <td class="ok">加分</td>
+      <td class="warn">时间&lt;2天</td>
+    </tr>
+    <tr>
+      <td style="color:#2e7d32;">小七孔</td>
+      <td>家庭友好自然</td>
+      <td class="warn">中</td>
+      <td class="ok">全年龄</td>
+      <td class="ok">加分</td>
+      <td class="warn">拒绝步行</td>
+    </tr>
+    <tr>
+      <td style="color:#2e7d32;">百里杜鹃</td>
+      <td>家庭友好自然</td>
+      <td class="ok">低</td>
+      <td class="ok">全年龄</td>
+      <td class="no">窗口期</td>
+      <td class="no">非花期/花粉</td>
+    </tr>
+    <tr>
+      <td style="color:#2e7d32;">织金洞</td>
+      <td>家庭友好自然</td>
+      <td class="warn">中</td>
+      <td class="warn">中大龄</td>
+      <td class="ok">全年</td>
+      <td class="warn">幽闭恐惧</td>
+    </tr>
+    <tr>
+      <td style="color:#2e7d32;">黄果树</td>
+      <td>家庭友好自然</td>
+      <td class="warn">中</td>
+      <td class="warn">中大龄</td>
+      <td class="ok">加分</td>
+      <td class="warn">婴幼儿/老人</td>
+    </tr>
+    <tr>
+      <td style="color:#2e7d32;">马岭河</td>
+      <td>家庭友好自然</td>
+      <td class="warn">中</td>
+      <td class="warn">中大龄</td>
+      <td class="warn">打折</td>
+      <td class="warn">老人/幼儿/恐高</td>
+    </tr>
+    <tr>
+      <td style="color:#1565c0;">西江苗寨</td>
+      <td>轻体力文化沉浸</td>
+      <td class="warn">中</td>
+      <td class="ok">全年龄</td>
+      <td class="ok">全年</td>
+      <td class="warn">追求原生态</td>
+    </tr>
+    <tr>
+      <td style="color:#1565c0;">镇远古镇</td>
+      <td>轻体力文化沉浸</td>
+      <td class="ok">低</td>
+      <td class="ok">全年龄</td>
+      <td class="ok">全年</td>
+      <td class="warn">高端住宿</td>
+    </tr>
+    <tr>
+      <td style="color:#f57f17;">青岩古镇</td>
+      <td>过渡缓冲</td>
+      <td class="ok">极低</td>
+      <td class="ok">全年龄</td>
+      <td class="ok">全年</td>
+      <td class="warn">专程远道</td>
+    </tr>
+  </table>
+</div>
+
+<div class="footer">贵州景区AI产品模型 v2.0 | 5维度判定 × 5类型聚类 | 2026-06-12</div>
+
+</div>
+
+</body>
+</html>
