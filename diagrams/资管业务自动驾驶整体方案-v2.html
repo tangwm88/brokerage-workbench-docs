@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>资管业务自动驾驶整体方案</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #f8f9fa;
+    padding: 20px;
+    min-width: 1400px;
+  }
+  .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 24px;
+  }
+  .main-layout {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .side {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .side-title {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 2px;
+  }
+  .side-title.left { background: #e8f5e9; color: #2e7d32; }
+  .side-title.right { background: #e3f2fd; color: #1565c0; }
+  .model-card {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .model-card .mc-title {
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mc-tag {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  .tag-green { background: #e8f5e9; color: #2e7d32; }
+  .tag-blue { background: #e3f2fd; color: #1565c0; }
+  .tag-orange { background: #fff3e0; color: #e65100; }
+  .tag-purple { background: #f3e5f5; color: #6a1b9a; }
+  .tag-red { background: #ffebee; color: #c62828; }
+  .model-card .mc-content {
+    color: #444;
+  }
+  .model-card .mc-content span {
+    display: inline-block;
+    background: #f5f5f5;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin: 1px 1px;
+    font-size: 10px;
+  }
+
+  /* Engine */
+  .engine-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .engine {
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border: 2.5px solid #1565c0;
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .engine-header {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .engine-header .icon { font-size: 20px; }
+  .engine-header h2 {
+    font-size: 16px;
+    color: #1565c0;
+    font-weight: 700;
+  }
+  .engine-header .sub {
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+  }
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .task-item {
+    border: 1px solid #e3f2fd;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .task-item .ti-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+  .task-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .tn-blue { background: #1565c0; }
+  .tn-green { background: #2e7d32; }
+  .tn-orange { background: #e65100; }
+  .tn-purple { background: #6a1b9a; }
+  .tn-red { background: #c62828; }
+  .tn-teal { background: #00695c; }
+  .tn-indigo { background: #283593; }
+  .tn-brown { background: #4e342e; }
+  .task-item .ti-title {
+    font-weight: 700;
+    font-size: 11px;
+    color: #333;
+  }
+  .task-item .ti-prompt {
+    color: #555;
+    font-size: 10px;
+    margin-top: 2px;
+    padding-left: 26px;
+  }
+  .task-item .ti-models {
+    margin-top: 3px;
+    padding-left: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  .ti-models .called-model {
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+
+  /* SVG connections */
+  .connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .section-divider {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin: 6px 0 2px;
+    font-weight: 600;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>资管业务自动驾驶整体方案</h1>
+  <div class="subtitle">基于产品、客户、规则等原子模型实现资管业务自动驾驶 | 对标贝莱德、彭博 | 行业级智能体产品</div>
+
+  <div class="main-layout" style="position:relative;">
+    <!-- SVG connections overlay -->
+    <svg class="connections" id="connSvg"></svg>
+
+    <!-- LEFT SIDE -->
+    <div class="side" id="leftSide">
+      <div class="side-title left">创设与募集阶段原子模型</div>
+
+      <div class="model-card" id="mc-design">
+        <div class="mc-title">📐 资管产品设计原子模型 <span class="mc-tag tag-green">3维</span></div>
+        <div class="mc-content"><span>配置结构</span><span>风险收益特征</span><span>期限安排</span></div>
+      </div>
+
+      <div class="model-card" id="mc-benchmark">
+        <div class="mc-title">📊 同业比对原子模型 <span class="mc-tag tag-green">蒸馏</span></div>
+        <div class="mc-content"><span>市面十几万只产品比对</span><span>配置差异</span><span>费率差异</span></div>
+      </div>
+
+      <div class="model-card" id="mc-calc">
+        <div class="mc-title">🧮 收益测算原子模型 <span class="mc-tag tag-green">测算</span></div>
+        <div class="mc-content"><span>预期收益</span><span>回撤压力测试</span><span>场景模拟</span></div>
+      </div>
+
+      <div class="model-card" id="mc-manager">
+        <div class="mc-title">👤 投资经理准入原子模型 <span class="mc-tag tag-green">6维</span></div>
+        <div class="mc-content"><span>管理规模</span><span>处罚信息</span><span>经营财务</span><span>团队实力</span><span>投资能力</span><span>风控能力</span></div>
+      </div>
+
+      <div class="model-card" id="mc-customer">
+        <div class="mc-title">👥 客户分类原子模型 <span class="mc-tag tag-green">分层</span></div>
+        <div class="mc-content"><span>个人客户分层</span><span>机构客户分类</span><span>资金规模</span></div>
+      </div>
+
+      <div class="model-card" id="mc-match">
+        <div class="mc-title">🎯 客户与产品匹配规则原子模型 <span class="mc-tag tag-green">5项</span></div>
+        <div class="mc-content"><span>合规匹配</span><span>投资能力</span><span>风险偏好</span><span>投资意愿</span><span>投资期限</span></div>
+      </div>
+
+      <div class="model-card" id="mc-content">
+        <div class="mc-title">📝 内容推介生成原子模型 <span class="mc-tag tag-green">6项</span></div>
+        <div class="mc-content"><span>合规宣传</span><span>产品特征</span><span>风险揭示</span><span>收益预期</span><span>适配说明</span><span>发行安排</span></div>
+      </div>
+
+      <div class="model-card" id="mc-channel">
+        <div class="mc-title">🏦 渠道准入原子模型 <span class="mc-tag tag-green">2情形</span></div>
+        <div class="mc-content"><span>已准入：直接办产品准入</span><span>新拓展：先机构后产品</span></div>
+      </div>
+    </div>
+
+    <!-- ENGINE CENTER -->
+    <div class="engine-wrap">
+      <div class="engine" id="engineBox">
+        <div class="engine-header">
+          <div class="icon">🚗</div>
+          <h2>资管业务自动驾驶引擎</h2>
+          <div class="sub">驱动模型 = AI提示词 | 状态与计量分离 | 全部并发</div>
+        </div>
+        <div class="task-list">
+
+          <div class="task-item" id="t1">
+            <div class="ti-header"><div class="task-num tn-blue">1</div><div class="ti-title">接收产品创设/引入意向</div></div>
+            <div class="ti-prompt">接收员工发起、外部投资经理提交、资金方需求、委外确认 → 生成标准化任务卡片，不做可行性判断</div>
+            <div class="ti-models"><span class="called-model">驱动模型</span><span class="called-model">权限模型</span></div>
+          </div>
+
+          <div class="task-item" id="t2">
+            <div class="ti-header"><div class="task-num tn-green">2</div><div class="ti-title">产品方案生成与评审</div></div>
+            <div class="ti-prompt">并发：设计方案→同业比对→收益测算→合规校验→费率确认。不通过给调优建议，不拒绝</div>
+            <div class="ti-models"><span class="called-model">产品设计</span><span class="called-model">同业比对</span><span class="called-model">收益测算</span><span class="called-model">投资经理准入</span><span class="called-model">合规模型</span><span class="called-model">费率模型</span><span class="called-model">绩效计量</span></div>
+          </div>
+
+          <div class="task-item" id="t3">
+            <div class="ti-header"><div class="task-num tn-orange">3</div><div class="ti-title">资金募集启动</div></div>
+            <div class="ti-prompt">并发：匹配客户→生成推介内容→合规验证→有经纪关系派发/无关系全平台抢单</div>
+            <div class="ti-models"><span class="called-model">客户分类</span><span class="called-model">匹配规则</span><span class="called-model">内容推介生成</span><span class="called-model">合规模型</span></div>
+          </div>
+
+          <div class="task-item" id="t4">
+            <div class="ti-header"><div class="task-num tn-purple">4</div><div class="ti-title">渠道准入与产品上架</div></div>
+            <div class="ti-prompt">已准入机构→直接办产品准入；新拓展机构→先机构准入再产品准入。两种情形不混</div>
+            <div class="ti-models"><span class="called-model">渠道准入</span><span class="called-model">合规模型</span></div>
+          </div>
+
+          <div class="task-item" id="t5">
+            <div class="ti-header"><div class="task-num tn-red">5</div><div class="ti-title">产品投资运作启动</div></div>
+            <div class="ti-prompt">确认投资经理→开放权限→合规持续监测→净值异常只报警不干预投资决策</div>
+            <div class="ti-models"><span class="called-model">产品设计</span><span class="called-model">合规模型</span></div>
+          </div>
+
+          <div class="task-item" id="t6">
+            <div class="ti-header"><div class="task-num tn-teal">6</div><div class="ti-title">售后持续服务</div></div>
+            <div class="ti-prompt">事件驱动并发：定期报告/净值波动(当日3%历史10%)/重大变化/大额赎回(月减30%)/客户咨询</div>
+            <div class="ti-models"><span class="called-model">售后动作模型</span><span class="called-model">合规模型</span></div>
+          </div>
+
+          <div class="task-item" id="t7">
+            <div class="ti-header"><div class="task-num tn-indigo">7</div><div class="ti-title">监督全过程管控</div></div>
+            <div class="ti-prompt">贯穿全程：进度管控/质量检查/合规留痕/异常报警/推进督促/计量核算。只留痕报警督促，不干预执行</div>
+            <div class="ti-models"><span class="called-model">监督模型</span><span class="called-model">合规模型</span><span class="called-model">计量分配</span><span class="called-model">权限模型</span></div>
+          </div>
+
+          <div class="task-item" id="t8">
+            <div class="ti-header"><div class="task-num tn-brown">8</div><div class="ti-title">贡献计量与收入分配</div></div>
+            <div class="ti-prompt">按五类模式分别计量。机器完成的不计量。只拆核心链条。中后台不分。当期+递延</div>
+            <div class="ti-models"><span class="called-model">贡献计量分配</span><span class="called-model">绩效计量</span><span class="called-model">跟投评估</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="side" id="rightSide">
+      <div class="side-title right">公司标准规则与售后原子模型</div>
+
+      <div class="model-card" id="mc-compliance">
+        <div class="mc-title">🛡️ 资管产品合规模型 <span class="mc-tag tag-blue">5项</span></div>
+        <div class="mc-content"><span>宣传内容合规</span><span>合格投资者</span><span>风险提示</span><span>适当性匹配</span><span>购买回访</span></div>
+      </div>
+
+      <div class="model-card" id="mc-performance">
+        <div class="mc-title">📈 总绩效计量原子模型 <span class="mc-tag tag-blue">按模式</span></div>
+        <div class="mc-content"><span>管理费提成</span><span>超额报酬</span><span>认申购费</span><span>销售服务费</span><span>五种模式分别定义</span></div>
+      </div>
+
+      <div class="model-card" id="mc-fee">
+        <div class="mc-title">💰 准入标准费率原子模型 <span class="mc-tag tag-blue">5项</span></div>
+        <div class="mc-content"><span>管理费下限</span><span>超额报酬基准</span><span>认申购费</span><span>销售服务费</span><span>业绩比较基准</span></div>
+      </div>
+
+      <div class="model-card" id="mc-contrib">
+        <div class="mc-title">⚖️ 员工贡献计量分配原子模型 <span class="mc-tag tag-orange">按角色</span></div>
+        <div class="mc-content"><span>发起人</span><span>产品设计师</span><span>募集销售人</span><span>投资经理</span><span>协作支持人</span></div>
+      </div>
+
+      <div class="model-card" id="mc-aftermarket">
+        <div class="mc-title">🔧 产品售后动作原子模型 <span class="mc-tag tag-orange">5项</span></div>
+        <div class="mc-content"><span>定期报告</span><span>净值波动沟通(当日3%/历史10%)</span><span>重大变化沟通</span><span>大额赎回(月减30%)</span><span>赎回响应(>300万)</span></div>
+      </div>
+
+      <div class="model-card" id="mc-supervise">
+        <div class="mc-title">👁️ 监督模型 <span class="mc-tag tag-orange">6项</span></div>
+        <div class="mc-content"><span>进度管控</span><span>质量检查</span><span>合规留痕</span><span>异常报警</span><span>推进督促</span><span>计量核算</span></div>
+      </div>
+
+      <div class="model-card" id="mc-permission">
+        <div class="mc-title">🔑 权限模型 <span class="mc-tag tag-purple">引擎特有</span></div>
+        <div class="mc-content"><span>任务组边界</span><span>语料权限</span><span>授权/失效</span><span>访问留痕</span></div>
+      </div>
+
+      <div class="model-card" id="mc-coinvest">
+        <div class="mc-title">📋 跟投评估模型 <span class="mc-tag tag-purple">模式五</span></div>
+        <div class="mc-content"><span>跟投比例</span><span>风险评估</span><span>资金来源</span><span>退出机制</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-note">
+    资管业务自动驾驶引擎 v2.0 | 一套方法论、一套模型、套不同产品特征 | 开放→聚合→机制→产品 | 对标贝莱德、彭博
+  </div>
+</div>
+
+<script>
+function drawConnections() {
+  const svg = document.getElementById('connSvg');
+  const container = document.querySelector('.main-layout');
+  const rect = container.getBoundingClientRect();
+  svg.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
+  svg.innerHTML = '';
+
+  const connections = [
+    // Task1 → 权限模型
+    { from: 't1', to: 'mc-permission', color: '#6a1b9a', dash: '4,3' },
+    // Task2 → 产品设计/同业比对/收益测算/投资经理准入
+    { from: 't2', to: 'mc-design', color: '#2e7d32', dash: '4,3' },
+    { from: 't2', to: 'mc-benchmark', color: '#2e7d32', dash: '4,3' },
+    { from: 't2', to: 'mc-calc', color: '#2e7d32', dash: '4,3' },
+    { from: 't2', to: 'mc-manager', color: '#2e7d32', dash: '4,3' },
+    // Task2 → 合规/费率/绩效
+    { from: 't2', to: 'mc-compliance', color: '#c62828', dash: '4,3' },
+    { from: 't2', to: 'mc-fee', color: '#1565c0', dash: '4,3' },
+    { from: 't2', to: 'mc-performance', color: '#1565c0', dash: '4,3' },
+    // Task3 → 客户分类/匹配/内容推介
+    { from: 't3', to: 'mc-customer', color: '#e65100', dash: '4,3' },
+    { from: 't3', to: 'mc-match', color: '#e65100', dash: '4,3' },
+    { from: 't3', to: 'mc-content', color: '#e65100', dash: '4,3' },
+    // Task3 → 合规
+    { from: 't3', to: 'mc-compliance', color: '#c62828', dash: '4,3' },
+    // Task4 → 渠道准入/合规
+    { from: 't4', to: 'mc-channel', color: '#6a1b9a', dash: '4,3' },
+    { from: 't4', to: 'mc-compliance', color: '#c62828', dash: '4,3' },
+    // Task5 → 产品设计/合规
+    { from: 't5', to: 'mc-design', color: '#2e7d32', dash: '4,3' },
+    { from: 't5', to: 'mc-compliance', color: '#c62828', dash: '4,3' },
+    // Task6 → 售后动作/合规
+    { from: 't6', to: 'mc-aftermarket', color: '#00695c', dash: '4,3' },
+    { from: 't6', to: 'mc-compliance', color: '#c62828', dash: '4,3' },
+    // Task7 → 监督/合规/计量分配/权限
+    { from: 't7', to: 'mc-supervise', color: '#283593', dash: '4,3' },
+    { from: 't7', to: 'mc-compliance', color: '#c62828', dash: '4,3' },
+    { from: 't7', to: 'mc-contrib', color: '#e65100', dash: '4,3' },
+    { from: 't7', to: 'mc-permission', color: '#6a1b9a', dash: '4,3' },
+    // Task8 → 计量分配/绩效/跟投评估
+    { from: 't8', to: 'mc-contrib', color: '#e65100', dash: '4,3' },
+    { from: 't8', to: 'mc-performance', color: '#1565c0', dash: '4,3' },
+    { from: 't8', to: 'mc-coinvest', color: '#4e342e', dash: '4,3' },
+  ];
+
+  connections.forEach(conn => {
+    const fromEl = document.getElementById(conn.from);
+    const toEl = document.getElementById(conn.to);
+    if (!fromEl || !toEl) return;
+
+    const fromRect = fromEl.getBoundingClientRect();
+    const toRect = toEl.getBoundingClientRect();
+    const contRect = container.getBoundingClientRect();
+
+    const isLeft = toRect.left < fromRect.left;
+    let x1, y1, x2, y2;
+
+    if (isLeft) {
+      x1 = fromRect.left - contRect.left;
+      y1 = fromRect.top + fromRect.height / 2 - contRect.top;
+      x2 = toRect.right - contRect.left;
+      y2 = toRect.top + toRect.height / 2 - contRect.top;
+    } else {
+      x1 = fromRect.right - contRect.left;
+      y1 = fromRect.top + fromRect.height / 2 - contRect.top;
+      x2 = toRect.left - contRect.left;
+      y2 = toRect.top + toRect.height / 2 - contRect.top;
+    }
+
+    const midX = (x1 + x2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`);
+    path.setAttribute('stroke', conn.color);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-dasharray', conn.dash);
+    path.setAttribute('opacity', '0.5');
+    svg.appendChild(path);
+  });
+}
+
+window.addEventListener('load', () => setTimeout(drawConnections, 100));
+window.addEventListener('resize', drawConnections);
+</script>
+</body>
+</html>
