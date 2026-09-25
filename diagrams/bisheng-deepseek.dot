@@ -1,0 +1,153 @@
+digraph BiShengDeepSeek {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fontname="Helvetica"];
+    edge [color="#546e7a", fontname="Helvetica", fontsize=10];
+    
+    // 应用层
+    subgraph cluster_app {
+        label="应用层";
+        style=rounded;
+        color="#e0e0e0";
+        bgcolor="#fafafa";
+        fontcolor="#333";
+        
+        A1 [label="投行工作台", fillcolor="#ffebee"];
+        A2 [label="资管工作台", fillcolor="#ffebee"];
+        A3 [label="财富管理终端", fillcolor="#ffebee"];
+        A4 [label="机构经纪门户", fillcolor="#ffebee"];
+        A5 [label="其他业务系统", fillcolor="#ffebee"];
+    }
+    
+    // BiSheng生态
+    subgraph cluster_bisheng {
+        label="BiSheng 生态";
+        style=rounded;
+        color="#1976d2";
+        bgcolor="#e3f2fd";
+        fontcolor="#1565c0";
+        
+        B1 [label="工作流引擎", fillcolor="#bbdefb"];
+        B2 [label="RAG检索增强", fillcolor="#bbdefb"];
+        B3 [label="工具市场", fillcolor="#bbdefb"];
+        B4 [label="知识库管理", fillcolor="#bbdefb"];
+        B5 [label="可视化编排", fillcolor="#bbdefb"];
+    }
+    
+    // DeepSeek生态
+    subgraph cluster_deepseek {
+        label="DeepSeek Harness 生态";
+        style=rounded;
+        color="#f57c00";
+        bgcolor="#fff3e0";
+        fontcolor="#e65100";
+        
+        D1 [label="模型接入层", fillcolor="#ffe0b2"];
+        D2 [label="提示词管理", fillcolor="#ffe0b2"];
+        D3 [label="推理优化引擎", fillcolor="#ffe0b2"];
+        D4 [label="多模态处理", fillcolor="#ffe0b2"];
+        D5 [label="安全护栏", fillcolor="#ffe0b2"];
+    }
+    
+    // 桥接层
+    subgraph cluster_bridge {
+        label="桥接层";
+        style=rounded;
+        color="#7b1fa2";
+        bgcolor="#f3e5f5";
+        fontcolor="#6a1b9a";
+        
+        BR1 [label="协议适配器", fillcolor="#e1bee7"];
+        BR2 [label="语义路由", fillcolor="#e1bee7"];
+        BR3 [label="上下文同步", fillcolor="#e1bee7"];
+        BR4 [label="能力发现", fillcolor="#e1bee7"];
+    }
+    
+    // 模型层
+    subgraph cluster_model {
+        label="模型层";
+        style=rounded;
+        color="#388e3c";
+        bgcolor="#e8f5e9";
+        fontcolor="#2e7d32";
+        
+        M1 [label="DeepSeek V3/R1", fillcolor="#c8e6c9"];
+        M2 [label="华为盘古大模型", fillcolor="#c8e6c9"];
+        M3 [label="其他开源模型", fillcolor="#c8e6c9"];
+        M4 [label="专用微调模型", fillcolor="#c8e6c9"];
+    }
+    
+    // 基础设施层
+    subgraph cluster_infra {
+        label="基础设施层";
+        style=rounded;
+        color="#616161";
+        bgcolor="#f5f5f5";
+        fontcolor="#424242";
+        
+        I1 [label="向量数据库", fillcolor="#eeeeee"];
+        I2 [label="关系数据库", fillcolor="#eeeeee"];
+        I3 [label="对象存储", fillcolor="#eeeeee"];
+        I4 [label="消息队列", fillcolor="#eeeeee"];
+        I5 [label="缓存层", fillcolor="#eeeeee"];
+    }
+    
+    // 外部集成
+    subgraph cluster_external {
+        label="外部集成";
+        style=rounded;
+        color="#00897b";
+        bgcolor="#e0f2f1";
+        fontcolor="#00695c";
+        
+        E1 [label="交易所API", fillcolor="#b2dfdb"];
+        E2 [label="监管报送", fillcolor="#b2dfdb"];
+        E3 [label="第三方数据", fillcolor="#b2dfdb"];
+        E4 [label="企业微信/钉钉", fillcolor="#b2dfdb"];
+    }
+    
+    // 应用层 -> 编排层
+    A1 -> B1;
+    A2 -> B1;
+    A3 -> D1;
+    A4 -> B1;
+    A5 -> D1;
+    
+    // BiSheng内部
+    B1 -> B2 [dir=both];
+    B1 -> B3 [dir=both];
+    B2 -> B4 [dir=both];
+    B3 -> B5 [dir=both];
+    
+    // DeepSeek内部
+    D1 -> D2 [dir=both];
+    D1 -> D3 [dir=both];
+    D3 -> D4 [dir=both];
+    D4 -> D5 [dir=both];
+    
+    // 桥接层
+    B1 -> BR1 [dir=both];
+    D1 -> BR1 [dir=both];
+    B2 -> BR3 [dir=both];
+    D2 -> BR3 [dir=both];
+    B3 -> BR2 [dir=both];
+    D5 -> BR4 [dir=both];
+    
+    // 模型层
+    D1 -> M1;
+    D1 -> M3;
+    B1 -> M2;
+    BR2 -> M4;
+    
+    // 基础设施
+    B2 -> I1 [dir=both];
+    B4 -> I2 [dir=both];
+    D3 -> I5 [dir=both];
+    B1 -> I4 [dir=both];
+    B5 -> I3 [dir=both];
+    
+    // 外部
+    B3 -> E1;
+    D5 -> E2;
+    B2 -> E3;
+    A3 -> E4;
+}
