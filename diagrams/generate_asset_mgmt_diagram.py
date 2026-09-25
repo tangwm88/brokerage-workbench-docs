@@ -207,22 +207,22 @@ draw_text_centered(draw, eng_cx, ENGINE_Y + 45, '驱动模型=AI提示词 | 状�
 
 # 任务列表 - 参考零售表达方式：任务N + 自然语言调度指令
 tasks = [
-    ('1', '#1565c0',
-     '任务1  接收员工发起、外部投资经理提交、资金方需求、委外确认，生成标准化任务卡片，调用"权限模型"组建任务组，所有意向不判断可行性全部进入引擎'),
-    ('2', '#2e7d32',
-     '任务2  并发调用"资管产品设计原子模型"、"同业比对原子模型"、"收益测算原子模型"生成产品方案，调用"投资经理准入原子模型"做六维评价，调用"资管产品合规模型"、"准入标准费率原子模型"、"总绩效计量原子模型"完成合规校验与费率确认，不通过给调优建议不拒绝'),
-    ('3', '#e65100',
-     '任务3  并发调用"客户分类原子模型"、"客户与产品匹配规则原子模型"自动匹配目标客户，调用"内容推介生成原子模型"生成推介内容，经"资管产品合规模型"验证后，有经纪关系的派发给客户经理，无关系的全平台抢单'),
-    ('4', '#6a1b9a',
-     '任务4  调用"渠道准入原子模型"判断渠道类型，已准入机构直接办产品准入，新拓展机构先机构准入再产品准入，两种情形不混在一起，完成后产品上架'),
-    ('5', '#c62828',
-     '任务5  确认投资经理或挂名投资经理，调用"资管产品设计原子模型"确认投资范围与限制，调用"资管产品合规模型"持续监测，净值异常只报警不干预投资决策'),
-    ('6', '#00695c',
-     '任务6  调用"产品售后动作原子模型"，事件驱动并发处理：定期报告、净值波动沟通(当日3%/历史10%)、重大变化沟通、大额赎回(月减30%)、客户咨询响应，自动生成售后工单'),
-    ('7', '#283593',
-     '任务7  监督模型贯穿全程并发运行：进度管控、质量检查、合规留痕、异常报警、推进督促、计量核算，调用"资管产品合规模型"留痕，调用"权限模型"管理任务组权限，只留痕报警督促不干预业务执行'),
-    ('8', '#4e342e',
-     '任务8  任务闭环后调用"员工贡献计量分配原子模型"、"总绩效计量原子模型"，按五类产品模式分别计量：机器完成的不计量，只拆核心链条，中后台不参与分成，当期与递延结合，调用"跟投评估模型"处理模式五跟投'),
+    ('1', '接收创设/引入意向',
+     '接收员工发起、外部投资经理提交、资金方需求、委外确认，生成标准化任务卡片，调用"权限模型"组建任务组，所有意向不判断可行性全部进入引擎'),
+    ('2', '产品方案生成与评审',
+     '并发调用"资管产品设计原子模型"、"同业比对原子模型"、"收益测算原子模型"生成产品方案，调用"投资经理准入原子模型"做六维评价，调用"资管产品合规模型"、"准入标准费率原子模型"、"总绩效计量原子模型"完成合规校验与费率确认，不通过给调优建议不拒绝'),
+    ('3', '资金募集启动',
+     '并发调用"客户分类原子模型"、"客户与产品匹配规则原子模型"自动匹配目标客户，调用"内容推介生成原子模型"生成推介内容，经"资管产品合规模型"验证后，有经纪关系的派发给客户经理，无关系的全平台抢单'),
+    ('4', '渠道准入与产品上架',
+     '调用"渠道准入原子模型"判断渠道类型，已准入机构直接办产品准入，新拓展机构先机构准入再产品准入，两种情形不混在一起，完成后产品上架'),
+    ('5', '投资运作启动',
+     '确认投资经理或挂名投资经理，调用"资管产品设计原子模型"确认投资范围与限制，调用"资管产品合规模型"持续监测，净值异常只报警不干预投资决策'),
+    ('6', '售后持续服务',
+     '调用"产品售后动作原子模型"，事件驱动并发处理：定期报告、净值波动沟通(当日3%/历史10%)、重大变化沟通、大额赎回(月减30%)、客户咨询响应，自动生成售后工单'),
+    ('7', '监督全过程管控',
+     '监督模型贯穿全程并发运行：进度管控、质量检查、合规留痕、异常报警、推进督促、计量核算，调用"资管产品合规模型"留痕，调用"权限模型"管理任务组权限，只留痕报警督促不干预业务执行'),
+    ('8', '贡献计量与收入分配',
+     '任务闭环后调用"员工贡献计量分配原子模型"、"总绩效计量原子模型"，按五类产品模式分别计量：机器完成的不计量，只拆核心链条，中后台不参与分成，当期与递延结合，调用"跟投评估模型"处理模式五跟投'),
 ]
 
 task_y = ENGINE_Y + 72
@@ -232,26 +232,32 @@ text_left_pad = task_left_pad + task_num_size + 12
 
 task_positions = []
 
-for idx, (num, color, text) in enumerate(tasks):
-    # 提取"任务N"标签和正文
+for idx, (num, theme, body) in enumerate(tasks):
     label = f'任务{num}'
-    body = text[len(label):].strip()
     
     # 计算文本行数确定高度
     max_text_w = ENGINE_W - text_left_pad - 20
-    text_lines = wrap_text_by_width(draw, body, task_text_font, max_text_w)
-    num_lines = len(text_lines)
-    task_h = max(52, num_lines * 18 + 30)
+    
+    # 主题行
+    theme_text = f'{label}  {theme}'
+    theme_lines = wrap_text_by_width(draw, theme_text, task_label_font, max_text_w)
+    
+    # 正文行
+    body_lines = wrap_text_by_width(draw, body, task_text_font, max_text_w)
+    
+    task_h = max(52, len(theme_lines)*20 + len(body_lines)*18 + 18)
     
     t_rect = (ENGINE_X + task_left_pad, task_y, ENGINE_X + ENGINE_W - task_left_pad, task_y + task_h)
     draw_rounded_rect(draw, t_rect, 8, COLORS['task_bg'], COLORS['task_border'], 1)
     
-    # "任务N"标签 - 绿色加粗文字，和零售方案一致
-    draw_text_left(draw, ENGINE_X + text_left_pad, task_y + 8, label, task_label_font, '#2e7d32')
+    # 主题行 - 绿色加粗
+    for i, line in enumerate(theme_lines):
+        draw_text_left(draw, ENGINE_X + text_left_pad, task_y + 8 + i*20, line, task_label_font, '#2e7d32')
     
-    # 正文（从"任务N"下一行开始）
-    for i, line in enumerate(text_lines):
-        draw_text_left(draw, ENGINE_X + text_left_pad, task_y + 26 + i*18, line, task_text_font, COLORS['text_mid'])
+    # 正文
+    body_start = task_y + 8 + len(theme_lines)*20 + 2
+    for i, line in enumerate(body_lines):
+        draw_text_left(draw, ENGINE_X + text_left_pad, body_start + i*18, line, task_text_font, COLORS['text_mid'])
     
     task_positions.append((ENGINE_X + task_left_pad, task_y + task_h/2, ENGINE_X + ENGINE_W - task_left_pad, idx))
     task_y += task_h + 8
