@@ -76,8 +76,8 @@ def wrap_text_by_width(draw, text, font, max_width):
 # ==================== 标题 ====================
 title_font = get_font(28, bold=True)
 subtitle_font = get_font(14)
-draw_text_centered(draw, W/2, 25, '资产管理自动驾驶平台方案', title_font, COLORS['title'])
-draw_text_centered(draw, W/2, 65, '基于产品、客户、规则等原子模型实现资产管理自动驾驶 | 对标贝莱德、彭博 | 行业级智能体产品', subtitle_font, COLORS['subtitle'])
+draw_text_centered(draw, W/2, 25, '资产管理自动驾驶平台', title_font, COLORS['title'])
+draw_text_centered(draw, W/2, 65, '基于产品、客户、规则等原子模型实现资产管理自动驾驶 | 对标贝莱德 | 行业级智能体产品', subtitle_font, COLORS['subtitle'])
 
 # ==================== 布局 ====================
 LEFT_X = 20
@@ -250,7 +250,7 @@ for idx, (num, theme, body) in enumerate(tasks):
 
 # ==================== 底部说明 ====================
 footer_font = get_font(12)
-footer_text = '资产管理自动驾驶平台 v3.0 | 一套方法论、一套模型、套不同产品特征 | 开放→聚合→机制→产品 | 对标贝莱德、彭博'
+footer_text = '资产管理自动驾驶平台 v3.0 | 一套方法论、一套模型、套不同产品特征 | 开放→聚合→机制→产品 | 对标贝莱德'
 draw_text_centered(draw, W/2, max(task_y, max_side_y) + 20, footer_text, footer_font, COLORS['footer'])
 
 # 保存
