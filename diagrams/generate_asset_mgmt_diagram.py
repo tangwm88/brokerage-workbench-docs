@@ -257,22 +257,9 @@ for idx, (num, color, text) in enumerate(tasks):
     task_y += task_h + 8
 
 # ==================== 连接线 ====================
-left_conn = [
-    (0, 1), (1, 1), (2, 1), (3, 1),  # 创设模型 → task2
-    (4, 2), (5, 2), (6, 2),           # 募集模型 → task3
-    (7, 3),                            # 渠道准入 → task4
-]
-
-right_conn = [
-    (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),  # 合规 → 多任务
-    (1, 1), (1, 7),  # 绩效计量 → task2, task8
-    (2, 1),          # 费率 → task2
-    (3, 7),          # 贡献计量 → task8
-    (4, 5),          # 售后动作 → task6
-    (5, 6),          # 监督 → task7
-    (6, 0), (6, 6),  # 权限 → task1, task7
-    (7, 7),          # 跟投评估 → task8
-]
+# 连接线已移除（用户要求）
+left_conn = []
+right_conn = []
 
 for model_idx, task_idx in left_conn:
     lx, ly = left_card_positions[model_idx]
