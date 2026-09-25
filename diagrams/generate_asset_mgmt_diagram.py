@@ -77,7 +77,6 @@ def wrap_text_by_width(draw, text, font, max_width):
 title_font = get_font(28, bold=True)
 subtitle_font = get_font(14)
 draw_text_centered(draw, W/2, 25, '资产管理自动驾驶平台', title_font, COLORS['title'])
-draw_text_centered(draw, W/2, 65, '基于产品、客户、规则等原子模型实现资产管理自动驾驶 | 行业级智能体产品', subtitle_font, COLORS['subtitle'])
 
 # ==================== 布局 ====================
 LEFT_X = 20
