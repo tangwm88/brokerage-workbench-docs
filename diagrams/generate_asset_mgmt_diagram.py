@@ -270,7 +270,16 @@ left_conn = [
     (7, 3),
 ]
 
-right_conn = []
+right_conn = [
+    (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),
+    (1, 1), (1, 7),
+    (2, 1),
+    (3, 7),
+    (4, 5),
+    (5, 6),
+    (6, 0), (6, 6),
+    (7, 7),
+]
 
 for model_idx, task_idx in left_conn:
     lx, ly = left_card_positions[model_idx]
@@ -290,7 +299,8 @@ for model_idx, task_idx in left_conn:
 
 for model_idx, task_idx in right_conn:
     rx, ry = right_card_positions[model_idx]
-    tx, ty, _, _ = task_positions[task_idx]
+    _, _, tx, _ = task_positions[task_idx]  # 取任务卡片右边缘
+    ty = task_positions[task_idx][1]        # 任务中心Y
     color = CONN_COLORS[task_idx % len(CONN_COLORS)]
     mid_x = (rx + tx) / 2
     points = []
