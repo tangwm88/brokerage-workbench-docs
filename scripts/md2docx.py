@@ -14,7 +14,11 @@ font.name = 'Microsoft YaHei'
 font.size = Pt(10.5)
 style.element.rPr.rFonts.set(qn('w:eastAsia'), 'Microsoft YaHei')
 
-with open('资产管理自动驾驶平台设计方案 v3.0.md', 'r', encoding='utf-8') as f:
+import sys
+md_file = sys.argv[1] if len(sys.argv) > 1 else '资产管理自动驾驶平台设计方案 v3.0.md'
+docx_file = sys.argv[2] if len(sys.argv) > 2 else md_file.replace('.md', '.docx')
+
+with open(md_file, 'r', encoding='utf-8') as f:
     lines = f.readlines()
 
 i = 0
@@ -110,6 +114,6 @@ while i < len(lines):
     p = doc.add_paragraph(line)
     i += 1
 
-output_path = '资产管理自动驾驶平台设计方案 v3.0.docx'
+output_path = docx_file
 doc.save(output_path)
 print(f'OK: {output_path}')
