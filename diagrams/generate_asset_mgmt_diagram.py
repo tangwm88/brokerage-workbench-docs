@@ -270,16 +270,7 @@ left_conn = [
     (7, 3),
 ]
 
-right_conn = [
-    (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),
-    (1, 1), (1, 7),
-    (2, 1),
-    (3, 7),
-    (4, 5),
-    (5, 6),
-    (6, 0), (6, 6),
-    (7, 7),
-]
+right_conn = []
 
 for model_idx, task_idx in left_conn:
     lx, ly = left_card_positions[model_idx]
