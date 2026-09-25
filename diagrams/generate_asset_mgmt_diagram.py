@@ -81,7 +81,7 @@ LEFT_W = 320
 RIGHT_X = W - 30 - 320
 RIGHT_W = 320
 ENGINE_X = LEFT_X + LEFT_W + 40
-ENGINE_W = W - ENGINE_X - RIGHT_W - 40
+ENGINE_W = W - ENGINE_X - RIGHT_W - 100
 ENGINE_Y = 100
 
 # ==================== 左侧原子模型 ====================
@@ -152,7 +152,7 @@ right_models = [
 
 rh_rect = (RIGHT_X, ENGINE_Y, RIGHT_X + RIGHT_W, ENGINE_Y + 32)
 draw_rounded_rect(draw, rh_rect, 6, COLORS['right_header_bg'])
-draw_text_centered(draw, RIGHT_X + RIGHT_W/2, ENGINE_Y + 6, '公司标准规则与售后原子模型', lh_font, COLORS['right_header_text'])
+draw_text_centered(draw, RIGHT_X + RIGHT_W/2, ENGINE_Y + 6, '监督与计量原子模型', lh_font, COLORS['right_header_text'])
 
 mc_y = ENGINE_Y + 42
 right_card_positions = []
