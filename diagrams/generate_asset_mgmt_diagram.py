@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""生成资管业务自动驾驶整体方案图 v2 - 参考零售表达方式"""
+"""生成资管业务自动驾驶整体方案图 v3 - 按四大类分块"""
 
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-W, H = 2000, 1400
+W, H = 2000, 1500
 img = Image.new('RGB', (W, H), '#f8f9fa')
 draw = ImageDraw.Draw(img)
 
@@ -28,10 +28,10 @@ COLORS = {
     'engine_bg': '#ffffff',
     'task_bg': '#ffffff',
     'task_border': '#e3f2fd',
-    'left_header_bg': '#e8f5e9',
-    'left_header_text': '#2e7d32',
-    'right_header_bg': '#e3f2fd',
-    'right_header_text': '#1565c0',
+    'sec1_bg': '#e8f5e9', 'sec1_text': '#2e7d32',
+    'sec2_bg': '#fff3e0', 'sec2_text': '#e65100',
+    'sec3_bg': '#e3f2fd', 'sec3_text': '#1565c0',
+    'sec4_bg': '#f3e5f5', 'sec4_text': '#6a1b9a',
     'model_bg': '#ffffff',
     'model_border': '#e0e0e0',
     'text_dark': '#333333',
@@ -40,7 +40,12 @@ COLORS = {
     'footer': '#999999',
 }
 
-CONN_COLORS = ['#2e7d32', '#1565c0', '#e65100', '#6a1b9a', '#c62828', '#00695c', '#283593', '#4e342e']
+SEC_STYLES = {
+    'sec1': ('#e8f5e9', '#2e7d32'),
+    'sec2': ('#fff3e0', '#e65100'),
+    'sec3': ('#e3f2fd', '#1565c0'),
+    'sec4': ('#f3e5f5', '#6a1b9a'),
+}
 
 def draw_rounded_rect(d, xy, radius, fill, outline=None, width=1):
     d.rounded_rectangle(xy, radius=radius, fill=fill, outline=outline, width=width)
@@ -54,7 +59,6 @@ def draw_text_left(d, x, y, text, font, fill):
     d.text((x, y), text, font=font, fill=fill)
 
 def wrap_text_by_width(draw, text, font, max_width):
-    """按像素宽度换行"""
     lines = []
     current = ''
     for char in text:
@@ -76,136 +80,130 @@ draw_text_centered(draw, W/2, 25, '资管业务自动驾驶整体方案', title_
 draw_text_centered(draw, W/2, 65, '基于产品、客户、规则等原子模型实现资管业务自动驾驶 | 对标贝莱德、彭博 | 行业级智能体产品', subtitle_font, COLORS['subtitle'])
 
 # ==================== 布局 ====================
-LEFT_X = 30
-LEFT_W = 320
-RIGHT_X = W - 30 - 320
-RIGHT_W = 320
-ENGINE_X = LEFT_X + LEFT_W + 40
-ENGINE_W = W - ENGINE_X - RIGHT_W - 100
+LEFT_X = 20
+LEFT_W = 300
+RIGHT_X = W - 20 - 300
+RIGHT_W = 300
+ENGINE_X = LEFT_X + LEFT_W + 30
+ENGINE_W = W - ENGINE_X - RIGHT_W - 30
 ENGINE_Y = 100
 
-# ==================== 左侧原子模型 ====================
-left_models = [
-    ('📐 资管产品设计原子模型', '3维', '配置结构 / 风险收益特征 / 期限安排', 'green'),
-    ('📊 同业比对原子模型', '蒸馏', '市面十几万只产品比对 / 配置差异 / 费率差异', 'green'),
-    ('🧮 收益测算原子模型', '测算', '预期收益 / 回撤压力测试 / 场景模拟', 'green'),
-    ('👤 投资经理准入原子模型', '6维', '管理规模/处罚信息/经营财务/团队实力/投资能力/风控能力', 'green'),
-    ('👥 客户分类原子模型', '分层', '个人客户分层 / 机构客户分类 / 资金规模', 'green'),
-    ('🎯 客户与产品匹配规则原子模型', '5项', '合规/投资能力/风险偏好/投资意愿/投资期限', 'green'),
-    ('📝 内容推介生成原子模型', '6项', '合规宣传/产品特征/风险揭示/收益预期/适配说明/发行安排', 'green'),
-    ('🏦 渠道准入原子模型', '2情形', '已准入→直接办产品准入 / 新拓展→先机构后产品', 'green'),
+# ==================== 四大类原子模型定义 ====================
+# 左侧：产品创设阶段 + 资金募集阶段（整合渠道代销）+ 投资运作阶段
+# 右侧：监督和计量
+
+sections_left = [
+    {
+        'title': '产品创设阶段原子模型',
+        'sec': 'sec1',
+        'models': [
+            ('📐 资管产品设计原子模型', '3维', '配置结构/风险收益特征/期限安排'),
+            ('📊 同业比对原子模型', '蒸馏', '市面十几万只产品比对/配置差异/费率差异'),
+            ('🧮 收益测算原子模型', '测算', '预期收益/回撤压力测试/场景模拟'),
+            ('👤 投资经理准入原子模型', '6维', '管理规模/处罚/财务/团队/投资能力/风控'),
+        ]
+    },
+    {
+        'title': '资金募集阶段原子模型',
+        'sec': 'sec2',
+        'models': [
+            ('👥 客户分类原子模型', '分层', '个人客户分层/机构客户分类/资金规模'),
+            ('🎯 客户与产品匹配规则原子模型', '5项', '合规/投资能力/风险偏好/投资意愿/投资期限'),
+            ('📝 内容推介生成原子模型', '6项', '合规宣传/产品特征/风险揭示/收益预期/适配说明/发行安排'),
+            ('🏦 渠道准入原子模型', '2情形', '已准入→直接办产品准入/新拓展→先机构后产品'),
+        ]
+    },
+    {
+        'title': '投资运作阶段原子模型',
+        'sec': 'sec3',
+        'models': [
+            ('📋 投资运作动作原子模型', '动作', '投资范围确认/交易执行/持仓管理/估值核算'),
+            ('⚠️ 风险监测原子模型', '监测', '净值回撤/集中度/流动性/合规风控线'),
+        ]
+    },
 ]
 
-lh_font = get_font(14, bold=True)
-lh_rect = (LEFT_X, ENGINE_Y, LEFT_X + LEFT_W, ENGINE_Y + 32)
-draw_rounded_rect(draw, lh_rect, 6, COLORS['left_header_bg'])
-draw_text_centered(draw, LEFT_X + LEFT_W/2, ENGINE_Y + 6, '创设与募集阶段原子模型', lh_font, COLORS['left_header_text'])
+sections_right = [
+    {
+        'title': '监督和计量原子模型',
+        'sec': 'sec4',
+        'models': [
+            ('🛡️ 资管产品合规模型', '5项', '宣传合规/合格投资者/风险提示/适当性/购买回访'),
+            ('👁️ 监督模型', '6项', '进度管控/质量检查/合规留痕/异常报警/推进督促/计量核算'),
+            ('⚖️ 员工贡献计量分配原子模型', '按角色', '发起人/产品设计师/募集销售人/投资经理/协作支持人'),
+            ('📈 总绩效计量原子模型', '按模式', '管理费/超额报酬/认申购费/销售服务费/五模式分别定义'),
+            ('💰 准入标准费率原子模型', '5项', '管理费下限/超额报酬基准/认申购费/销售服务费/业绩比较基准'),
+            ('🔑 权限模型', '引擎', '任务组边界/语料权限/授权失效/访问留痕'),
+            ('📋 跟投评估模型', '模式五', '跟投比例/风险评估/资金来源/退出机制'),
+        ]
+    },
+]
 
+# ==================== 渲染函数 ====================
+sec_header_font = get_font(13, bold=True)
 mc_font_title = get_font(11, bold=True)
 mc_font_tag = get_font(9)
 mc_font_content = get_font(9)
-mc_y = ENGINE_Y + 42
-mc_h = 72
-mc_gap = 8
+mc_h = 68
+mc_gap = 6
+sec_gap = 14
 
-left_card_positions = []
-for title, tag, content, color in left_models:
-    rect = (LEFT_X, mc_y, LEFT_X + LEFT_W, mc_y + mc_h)
-    draw_rounded_rect(draw, rect, 8, COLORS['model_bg'], COLORS['model_border'], 1)
-    draw_text_left(draw, LEFT_X + 10, mc_y + 8, title, mc_font_title, COLORS['text_dark'])
+def render_sections(sections, x, w):
+    y = ENGINE_Y
+    card_positions = []
+    for section in sections:
+        bg, text_color = SEC_STYLES[section['sec']]
+        # 分块标题
+        hdr_rect = (x, y, x + w, y + 28)
+        draw_rounded_rect(draw, hdr_rect, 6, bg)
+        draw_text_centered(draw, x + w/2, y + 5, section['title'], sec_header_font, text_color)
+        y += 34
+        
+        # 模型卡片
+        for title, tag, content in section['models']:
+            rect = (x, y, x + w, y + mc_h)
+            draw_rounded_rect(draw, rect, 8, COLORS['model_bg'], COLORS['model_border'], 1)
+            draw_text_left(draw, x + 10, y + 7, title, mc_font_title, COLORS['text_dark'])
+            
+            tag_rect = (x + w - 55, y + 7, x + w - 10, y + 24)
+            draw_rounded_rect(draw, tag_rect, 8, bg)
+            bbox = draw.textbbox((0,0), tag, font=mc_font_tag)
+            tw = bbox[2]-bbox[0]
+            draw_text_left(draw, x + w - 10 - tw - (45-tw)/2, y + 9, tag, mc_font_tag, text_color)
+            
+            lines = wrap_text_by_width(draw, content, mc_font_content, w - 20)
+            for i, line in enumerate(lines[:3]):
+                draw_text_left(draw, x + 10, y + 28 + i*14, line, mc_font_content, COLORS['text_mid'])
+            
+            card_positions.append((x + w if x < W/2 else x, y + mc_h/2))
+            y += mc_h + mc_gap
+        
+        y += sec_gap
     
-    tag_rect = (LEFT_X + LEFT_W - 60, mc_y + 8, LEFT_X + LEFT_W - 10, mc_y + 26)
-    draw_rounded_rect(draw, tag_rect, 8, COLORS['left_header_bg'])
-    bbox = draw.textbbox((0,0), tag, font=mc_font_tag)
-    tw = bbox[2]-bbox[0]
-    draw_text_left(draw, LEFT_X + LEFT_W - 10 - tw - (50-tw)/2, mc_y + 10, tag, mc_font_tag, COLORS['left_header_text'])
-    
-    lines = []
-    current = ''
-    for char in content:
-        test = current + char
-        bbox = draw.textbbox((0, 0), test, font=mc_font_content)
-        if bbox[2] - bbox[0] > LEFT_W - 20 and current:
-            lines.append(current)
-            current = char
-        else:
-            current = test
-    if current:
-        lines.append(current)
-    for i, line in enumerate(lines[:3]):
-        draw_text_left(draw, LEFT_X + 10, mc_y + 32 + i*16, line, mc_font_content, COLORS['text_mid'])
-    
-    left_card_positions.append((LEFT_X + LEFT_W, mc_y + mc_h/2))
-    mc_y += mc_h + mc_gap
+    return y, card_positions
 
-# ==================== 右侧原子模型 ====================
-right_models = [
-    ('🛡️ 资管产品合规模型', '5项', '宣传内容合规/合格投资者/风险提示/适当性匹配/购买回访', 'blue'),
-    ('📈 总绩效计量原子模型', '按模式', '管理费提成/超额报酬/认申购费/销售服务费/五种模式分别定义', 'blue'),
-    ('💰 准入标准费率原子模型', '5项', '管理费下限/超额报酬基准/认申购费/销售服务费/业绩比较基准', 'blue'),
-    ('⚖️ 员工贡献计量分配原子模型', '按角色', '发起人/产品设计师/募集销售人/投资经理/协作支持人', 'orange'),
-    ('🔧 产品售后动作原子模型', '5项', '定期报告/净值波动沟通(当日3%历史10%)/重大变化/大额赎回(月减30%)', 'orange'),
-    ('👁️ 监督模型', '6项', '进度管控/质量检查/合规留痕/异常报警/推进督促/计量核算', 'orange'),
-    ('🔑 权限模型', '引擎', '任务组边界/语料权限/授权失效/访问留痕', 'purple'),
-    ('📋 跟投评估模型', '模式五', '跟投比例/风险评估/资金来源/退出机制', 'purple'),
-]
+# 渲染左侧
+left_end_y, left_card_positions = render_sections(sections_left, LEFT_X, LEFT_W)
 
-rh_rect = (RIGHT_X, ENGINE_Y, RIGHT_X + RIGHT_W, ENGINE_Y + 32)
-draw_rounded_rect(draw, rh_rect, 6, COLORS['right_header_bg'])
-draw_text_centered(draw, RIGHT_X + RIGHT_W/2, ENGINE_Y + 6, '监督与计量原子模型', lh_font, COLORS['right_header_text'])
+# 渲染右侧
+right_end_y, right_card_positions = render_sections(sections_right, RIGHT_X, RIGHT_W)
 
-mc_y = ENGINE_Y + 42
-right_card_positions = []
-for title, tag, content, color in right_models:
-    rect = (RIGHT_X, mc_y, RIGHT_X + RIGHT_W, mc_y + mc_h)
-    draw_rounded_rect(draw, rect, 8, COLORS['model_bg'], COLORS['model_border'], 1)
-    draw_text_left(draw, RIGHT_X + 10, mc_y + 8, title, mc_font_title, COLORS['text_dark'])
-    
-    tag_colors = {
-        'blue': ('#e3f2fd', '#1565c0'),
-        'orange': ('#fff3e0', '#e65100'),
-        'purple': ('#f3e5f5', '#6a1b9a'),
-    }
-    tag_bg, tag_text_color = tag_colors.get(color, ('#e3f2fd', '#1565c0'))
-    tag_rect = (RIGHT_X + RIGHT_W - 65, mc_y + 8, RIGHT_X + RIGHT_W - 10, mc_y + 26)
-    draw_rounded_rect(draw, tag_rect, 8, tag_bg)
-    bbox = draw.textbbox((0,0), tag, font=mc_font_tag)
-    tw = bbox[2]-bbox[0]
-    draw_text_left(draw, RIGHT_X + RIGHT_W - 10 - tw - (55-tw)/2, mc_y + 10, tag, mc_font_tag, tag_text_color)
-    
-    lines = []
-    current = ''
-    for char in content:
-        test = current + char
-        bbox = draw.textbbox((0, 0), test, font=mc_font_content)
-        if bbox[2] - bbox[0] > RIGHT_W - 20 and current:
-            lines.append(current)
-            current = char
-        else:
-            current = test
-    if current:
-        lines.append(current)
-    for i, line in enumerate(lines[:3]):
-        draw_text_left(draw, RIGHT_X + 10, mc_y + 32 + i*16, line, mc_font_content, COLORS['text_mid'])
-    
-    right_card_positions.append((RIGHT_X, mc_y + mc_h/2))
-    mc_y += mc_h + mc_gap
+# 取最大高度
+max_side_y = max(left_end_y, right_end_y)
 
 # ==================== 中间引擎 ====================
 eng_title_font = get_font(18, bold=True)
 eng_sub_font = get_font(11)
-task_num_font = get_font(11, bold=True)
 task_text_font = get_font(11)
 task_label_font = get_font(12, bold=True)
 
-eng_rect = (ENGINE_X, ENGINE_Y, ENGINE_X + ENGINE_W, mc_y - mc_gap + 10)
+eng_rect = (ENGINE_X, ENGINE_Y, ENGINE_X + ENGINE_W, max_side_y + 10)
 draw_rounded_rect(draw, eng_rect, 16, COLORS['engine_bg'], COLORS['engine_border'], 3)
 
 eng_cx = ENGINE_X + ENGINE_W / 2
 draw_text_centered(draw, eng_cx, ENGINE_Y + 15, '🚗 资管业务自动驾驶引擎', eng_title_font, COLORS['engine_border'])
 draw_text_centered(draw, eng_cx, ENGINE_Y + 45, '驱动模型=AI提示词 | 状态与计量分离 | 全部并发无流程', eng_sub_font, COLORS['text_light'])
 
-# 任务列表 - 参考零售表达方式：任务N + 自然语言调度指令
 tasks = [
     ('1', '接收创设/引入意向',
      '接收员工发起、外部投资经理提交、资金方需求、委外确认，生成标准化任务卡片，调用"权限模型"组建任务组，所有意向不判断可行性全部进入引擎'),
@@ -226,86 +224,35 @@ tasks = [
 ]
 
 task_y = ENGINE_Y + 72
-task_num_size = 24
 task_left_pad = 15
-text_left_pad = task_left_pad + task_num_size + 12
-
-task_positions = []
+text_left_pad = task_left_pad + 10
 
 for idx, (num, theme, body) in enumerate(tasks):
     label = f'任务{num}'
-    
-    # 计算文本行数确定高度
     max_text_w = ENGINE_W - text_left_pad - 20
-    
-    # 主题行
     theme_text = f'{label}  {theme}'
     theme_lines = wrap_text_by_width(draw, theme_text, task_label_font, max_text_w)
-    
-    # 正文行
     body_lines = wrap_text_by_width(draw, body, task_text_font, max_text_w)
-    
     task_h = max(52, len(theme_lines)*20 + len(body_lines)*18 + 18)
     
     t_rect = (ENGINE_X + task_left_pad, task_y, ENGINE_X + ENGINE_W - task_left_pad, task_y + task_h)
     draw_rounded_rect(draw, t_rect, 8, COLORS['task_bg'], COLORS['task_border'], 1)
     
-    # 主题行 - 绿色加粗
     for i, line in enumerate(theme_lines):
         draw_text_left(draw, ENGINE_X + text_left_pad, task_y + 8 + i*20, line, task_label_font, '#2e7d32')
     
-    # 正文
     body_start = task_y + 8 + len(theme_lines)*20 + 2
     for i, line in enumerate(body_lines):
         draw_text_left(draw, ENGINE_X + text_left_pad, body_start + i*18, line, task_text_font, COLORS['text_mid'])
     
-    task_positions.append((ENGINE_X + task_left_pad, task_y + task_h/2, ENGINE_X + ENGINE_W - task_left_pad, idx))
     task_y += task_h + 8
-
-# ==================== 连接线 ====================
-# 连接线已移除（用户要求）
-left_conn = []
-right_conn = []
-
-for model_idx, task_idx in left_conn:
-    lx, ly = left_card_positions[model_idx]
-    tx, ty, _, _ = task_positions[task_idx]
-    color = CONN_COLORS[task_idx % len(CONN_COLORS)]
-    mid_x = (lx + tx) / 2
-    points = []
-    for t in range(0, 21):
-        t = t / 20
-        cx1, cy1 = mid_x, ly
-        cx2, cy2 = mid_x, ty
-        x = (1-t)**3 * lx + 3*(1-t)**2*t*cx1 + 3*(1-t)*t**2*cx2 + t**3*tx
-        y = (1-t)**3 * ly + 3*(1-t)**2*t*cy1 + 3*(1-t)*t**2*cy2 + t**3*ty
-        points.append((x, y))
-    for i in range(len(points)-1):
-        draw.line([points[i], points[i+1]], fill=color, width=1)
-
-for model_idx, task_idx in right_conn:
-    rx, ry = right_card_positions[model_idx]
-    _, _, tx, _ = task_positions[task_idx]  # 取任务卡片右边缘
-    ty = task_positions[task_idx][1]        # 任务中心Y
-    color = CONN_COLORS[task_idx % len(CONN_COLORS)]
-    mid_x = (rx + tx) / 2
-    points = []
-    for t in range(0, 21):
-        t = t / 20
-        cx1, cy1 = mid_x, ry
-        cx2, cy2 = mid_x, ty
-        x = (1-t)**3 * tx + 3*(1-t)**2*t*cx1 + 3*(1-t)*t**2*cx2 + t**3*rx
-        y = (1-t)**3 * ty + 3*(1-t)**2*t*cy1 + 3*(1-t)*t**2*cy2 + t**3*ry
-        points.append((x, y))
-    for i in range(len(points)-1):
-        draw.line([points[i], points[i+1]], fill=color, width=1)
 
 # ==================== 底部说明 ====================
 footer_font = get_font(12)
 footer_text = '资管业务自动驾驶引擎 v2.1 | 一套方法论、一套模型、套不同产品特征 | 开放→聚合→机制→产品 | 对标贝莱德、彭博'
-draw_text_centered(draw, W/2, task_y + 20, footer_text, footer_font, COLORS['footer'])
+draw_text_centered(draw, W/2, max(task_y, max_side_y) + 20, footer_text, footer_font, COLORS['footer'])
 
 # 保存
 output_path = '/root/.openclaw/workspace/diagrams/资管业务自动驾驶整体方案-v2.png'
 img.save(output_path, 'PNG', dpi=(150, 150))
-print(f'OK: {output_path}, size: {W}x{H}')
+print(f'OK: {output_path}, size: {W}x{max(H, max(task_y, max_side_y) + 60)}')
